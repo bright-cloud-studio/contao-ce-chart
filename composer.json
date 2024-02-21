@@ -1,0 +1,41 @@
+{
+    "name":"bright-cloud-studio/contao-ce-chart",
+    "description":"Integrates Chartjs into Contao using custom Content Elements.",
+    "keywords": ["contao", "content element", "bright", "cloud", "studio", "chartjs", "chart"],
+    "type": "contao-bundle",
+    "homepage": "http://brightcloudstudio.com/",
+    "license": "LGPL-3.0+",
+    "authors":[
+        {
+            "name": "Bright Cloud Studio",
+            "homepage": "https://brightcloudstudio.com",
+            "email": "mark@brightcloudstudio.com",
+            "role": "Developer"
+        }
+    ],
+    "support":{
+        "issues": "https://github.com/bright-cloud-studio/contao-ce-chart/issues",
+        "source": "https://github.com/bright-cloud-studio/contao-ce-chart"
+    },
+    "require":{
+        "php": "^7.4 || ^8.0",
+        "contao/core-bundle": "^4.13"
+    },
+    "extra":{
+        "contao-manager-plugin": "Bcs\\ChartBundle\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bcs\\ChartBundle\\": "src"
+        },
+        "classmap": [
+            "src/Resources/contao"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
+    }
+}
