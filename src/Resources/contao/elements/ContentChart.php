@@ -27,4 +27,20 @@ class ContentChart extends \ContentText
 	{
 		parent::compile();
 	}
+
+    /**
+	 * Initialize the object
+	 *
+	 * @param ContentModel $objElement
+	 * @param string       $strColumn
+	 */
+	public function __construct($objElement, $strColumn='main')
+	{
+		parent::__construct($objElement, $strColumn='main');
+        $GLOBALS['TL_CSS'][] = 'bundles/bcsrecaptcha/styles/contao_ce_recaptcha.css';
+        
+	}
+
+
+    
 }
