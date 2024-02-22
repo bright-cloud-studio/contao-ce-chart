@@ -37,7 +37,7 @@ class ContentChart extends \ContentText
 	public function __construct($objElement, $strColumn='main')
 	{
         parent::__construct($objElement, $strColumn='main');
-        $GLOBALS['TL_JAVASCRIPT'][] = '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'https://cdn.jsdelivr.net/npm/chart.js';
         $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/bcschart/scripts/contao_ce_chart.js';
 	}
 
