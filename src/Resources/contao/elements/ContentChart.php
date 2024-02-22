@@ -37,7 +37,8 @@ class ContentChart extends \ContentText
 	public function __construct($objElement, $strColumn='main')
 	{
 		parent::__construct($objElement, $strColumn='main');
-        $GLOBALS['TL_CSS'][] = 'bundles/bcsrecaptcha/styles/contao_ce_recaptcha.css';
+        $GLOBALS['TL_CSS'][] = 'bundles/bcschart/scripts/contao_ce_chart.js';
+        $GLOBALS['TL_JAVASCRIPT'][] = '';
         
 	}
 
