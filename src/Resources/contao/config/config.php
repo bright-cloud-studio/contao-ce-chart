@@ -10,7 +10,7 @@
 
  array_insert($GLOBALS['TL_CTE']['datasets'], 10, array
  (
- 	'Chart' => 'Bcs\ChartBundle\ContentChart')
+ 	'chart' => 'Bcs\ChartBundle\ContentChart')
  );
 
 ?>
