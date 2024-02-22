@@ -8,9 +8,9 @@
  * @see	       https://github.com/bright-cloud-studio/contao-ce-chart
  */
 
- array_insert($GLOBALS['TL_CTE']['texts'], 10, array
+ array_insert($GLOBALS['TL_CTE']['bcs'], 10, array
  (
- 	'chart' => 'Bcs\ChartBundle\ContentChart')
+ 	'Chart' => 'Bcs\ChartBundle\ContentChart')
  );
 
 ?>
