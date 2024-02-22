@@ -39,6 +39,12 @@ class ContentBarChart extends \ContentText
         parent::__construct($objElement, $strColumn='main');
         $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
         $GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
+
+        // Testing injecting
+        $start = '<script> alert("test"); </script>';
+        $GLOBALS['TL_JAVASCRIPT']['chart_injection'] = $start
+
+        
 	}
 
 
