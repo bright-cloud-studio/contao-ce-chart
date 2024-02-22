@@ -42,7 +42,7 @@ class ContentBarChart extends \ContentText
 
         // Testing injecting
         $start = '<script> alert("test"); </script>';
-        $GLOBALS['TL_JAVASCRIPT']['chart_injection'] = $start
+        $GLOBALS['TL_JAVASCRIPT']['chart_injection'] = $start;
 
         
 	}
