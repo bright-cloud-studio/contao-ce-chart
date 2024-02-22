@@ -8,7 +8,7 @@
  * @see	       https://github.com/bright-cloud-studio/contao-ce-chart
  */
 
- array_insert($GLOBALS['TL_CTE']['bcs'], 10, array
+ array_insert($GLOBALS['TL_CTE']['datasets'], 10, array
  (
  	'Chart' => 'Bcs\ChartBundle\ContentChart')
  );
