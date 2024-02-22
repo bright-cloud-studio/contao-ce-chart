@@ -10,14 +10,14 @@
 
 namespace Bcs\ChartBundle;
 
-class ContentChart extends \ContentText
+class ContentLineChart extends \ContentText
 {
 
 	/**
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'ce_chart';
+	protected $strTemplate = 'ce_chart_line';
 
 
 	/**
@@ -37,8 +37,8 @@ class ContentChart extends \ContentText
 	public function __construct($objElement, $strColumn='main')
 	{
         parent::__construct($objElement, $strColumn='main');
-        $GLOBALS['TL_JAVASCRIPT'][] = 'https://cdn.jsdelivr.net/npm/chart.js';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/bcschart/scripts/contao_ce_chart.js';
+        $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
+        $GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
 	}
 
 
