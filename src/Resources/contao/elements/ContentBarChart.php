@@ -41,7 +41,8 @@ class ContentBarChart extends \ContentText
         $GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
 
         // Testing injecting
-        $start = '<script type="text/javascript" charset="utf-8"> alert("test"); </script>';
+        $start = 'alert("test");';
+        $GLOBALS['TL_JAVASCRIPT']['chart_injection']['type'] = "testy";
         $GLOBALS['TL_JAVASCRIPT']['chart_injection'] = $start;
 
         
