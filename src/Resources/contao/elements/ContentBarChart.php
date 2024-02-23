@@ -8,9 +8,10 @@
  * @see	       https://github.com/bright-cloud-studio/contao-ce-chart
  */
 
+use Contao;
 namespace Bcs\ChartBundle;
 
-class ContentBarChart extends \ContentText
+class ContentBarChart extends ContentText
 {
 
 	/**
@@ -48,7 +49,7 @@ class ContentBarChart extends \ContentText
 
         // Inline script in the <body> at the bottom
         //$GLOBALS['TL_BODY']['chart_injection'] = '<script>alert("bing bong noise");</script>';
-        
 	}
-
 }
+
+class_alias(ContentBarChart::class, 'ContentBarChart');
