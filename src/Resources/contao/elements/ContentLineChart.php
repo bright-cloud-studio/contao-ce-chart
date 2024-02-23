@@ -72,13 +72,6 @@ class ContentLineChart extends ContentTable
                 {
                     label: '".$datasets[$index]['label']."',
                     data: [".$datasets[$index]['data']."],
-                    radius: 5,
-                    pointStyle: 'circle',
-                    backgroundColor: '#9BD0F5',
-                    borderWidth: 5,
-                    hoverRadius: 5,
-                    hoverBorderWidth: 5
-                    
                 },
                 ";
                 
@@ -135,7 +128,20 @@ class ContentLineChart extends ContentTable
                               }
                             },
                 ';
+            }
 
+
+            if('yes == 'yes') {
+
+                $config .= '
+                            elements: {
+                              line: {
+                                    tension: 5,
+                                    backgroundColor: '#ff00ff',
+                                    borderWidth: 10
+                                }
+                              },
+                ';
             }
             
             
