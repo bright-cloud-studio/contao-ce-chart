@@ -46,6 +46,9 @@ class ContentBarChart extends \ContentText
         // Inline script in the <header>
         $GLOBALS['TL_HEAD']['chart_injection'] = '<script>alert("ding");</script>';
 
+        // Inline script in the <body> at the bottom
+        $GLOBALS['TL_BODY']['chart_injection'] = '<script>alert("bing bong noise");</script>';
+
         
 	}
 
