@@ -23,4 +23,4 @@ $arrFields = array(
     ),
 );
 
-//$dc['fields'] = array_merge($dc['fields'], $arrFields);
+$dc['fields'] = array_merge($dc['fields'], $arrFields);
