@@ -27,7 +27,8 @@ class ContentBarChart extends ContentTable
 	 */
 	public function compile()
 	{
-		parent::compile();
+		// Run the initial compile function just to be cool like that
+        parent::compile();
 	}
 
     /**
@@ -38,18 +39,88 @@ class ContentBarChart extends ContentTable
 	 */
 	public function __construct($objElement, $strColumn='main')
 	{
-        // Run the originally construct function, if there is one
+	    // Run the original construct function
         parent::__construct($objElement, $strColumn='main');
+    
+        // Assemble our table data into usable formats
+        $rows = \StringUtil::deserialize($this->tableitems, true);
+    
+        // Assemble our label data as a string
+        $labels = '';
+        for ($x = 1; $x < count($rows[0]); $x++) {
+            $labels .= '"'.$rows[0][$x].'"';
+            if($x != count($rows[0])-1) { $labels .= ', '; }
+        }
+    
+        // Assemble our datasets
+        $datasets = array();
+        foreach($rows as $index=>$row) {
+            
+            $datasets[$index]['label'] = $row[0];
+            $datasets[$index]['data_string'] = '';
+            
+            for($x = 1; $x < count($row); $x++) {
 
-        // Link script files in the <header>
+                $datasets[$index]['data'] .= '"' . $row[$x] . '"';
+                if($x != count($row)-1) { $datasets[$index]['data'] .= ', '; }
+                
+            }
+            
+            $datasets[$index]['dataset'] = "
+            {
+                label: '".$datasets[$index]['label']."',
+                data: [".$datasets[$index]['data']."],
+                borderWidth: 1,
+            },
+            ";
+            
+        }
+        
+        // Include Chart.js and our configuration script
         $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
-        $GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
 
-        // Inline script in the <header>
-        //$GLOBALS['TL_HEAD']['chart_injection'] = '<script>alert("ding");</script>';
+        // Start our config script
+        $config = '
+            document.addEventListener("DOMContentLoaded", function () {
+                const ctx_'.$this->id.' = document.getElementById("chart_'.$this->id.'")
+                const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
+                    type: "bar",
+                    data: {
+                        labels: ['.$labels.'],
+                        datasets: [';
 
-        // Inline script in the <body> at the bottom
-        //$GLOBALS['TL_BODY']['chart_injection'] = '<script>alert("bing bong noise");</script>';
+        // Add in our datasets
+        foreach($datasets as $index=>$dataset) {
+            if($index > 0)
+                $config .= $dataset['dataset'];
+        }
+
+        // End our config script
+        $config .=  '
+                        ],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                        plugins: {
+                          legend: {
+                            position: "top",
+                          },
+                          title: {
+                            display: true,
+                            text: "'.$datasets[0]['label'].'"
+                          }
+                        }
+                    },
+                });
+            });
+        ';
+
+        // Add our config script to the bottom of the <body> tag
+        $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
 	}
 }
 
