@@ -77,7 +77,7 @@ class ContentLineChart extends ContentTable
                     backgroundColor: '#9BD0F5',
                     borderWidth: 1,
                     hoverRadius: 10,
-                    hoverBorderWidth 1
+                    hoverBorderWidth: 1
                     
                 },
                 ";
