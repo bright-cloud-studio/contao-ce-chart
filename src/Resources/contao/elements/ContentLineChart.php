@@ -8,10 +8,9 @@
  * @see	       https://github.com/bright-cloud-studio/contao-ce-chart
  */
 
-namespace Contao;
 namespace Bcs\ChartBundle;
 
-class ContentLineChart extends ContentText
+class ContentLineChart extends \ContentTable
 {
 
 	/**
