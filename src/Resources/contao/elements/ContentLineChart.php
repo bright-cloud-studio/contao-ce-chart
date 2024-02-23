@@ -131,7 +131,7 @@ class ContentLineChart extends ContentTable
             }
 
 
-            if('yes == 'yes') {
+            if('yes' == 'yes') {
 
                 $config .= '
                             elements: {
