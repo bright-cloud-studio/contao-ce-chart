@@ -127,7 +127,7 @@ class ContentLineChart extends ContentTable
                                   }
                                 }
                               }
-                            }
+                            },
                 ';
 
             }
