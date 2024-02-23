@@ -27,12 +27,8 @@ class ContentLineChart extends ContentTable
 	 */
 	public function compile()
 	{
-		//$rows = \StringUtil::deserialize($this->tableitems, true);
-		
-		//echo "<pre>";
-		//print_r($rows);
-		//echo "</pre>";
-		//die();
+        // Run the initial compile function just to be cool like that
+        parent::compile();
 	}
 
     /**
@@ -45,24 +41,17 @@ class ContentLineChart extends ContentTable
 	{
 	    // Run the original construct function
         parent::__construct($objElement, $strColumn='main');
-        
-        
+    
         // Assemble our table data into usable formats
         $rows = \StringUtil::deserialize($this->tableitems, true);
-        
-        //echo "<pre>";
-        //print_r($rows);
-        //echo "</pre>";
-        //die();
-        
+    
         // Assemble our label data as a string
         $labels = '';
         for ($x = 1; $x < count($rows[0]); $x++) {
             $labels .= '"'.$rows[0][$x].'"';
             if($x != count($rows[0])-1) { $labels .= ', '; }
         }
-        
-
+    
         // Assemble our datasets
         $datasets = array();
         foreach($rows as $index=>$row) {
@@ -87,46 +76,27 @@ class ContentLineChart extends ContentTable
             
         }
         
-        //echo "<pre>";
-        //print_r($datasets);
-        //echo "</pre>";
-        //die();
-        
-        
-       
-		
-		
-        
-        
         // Include Chart.js and our configuration script
         $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
-        //$GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
-        
-        
-        
-        
-        
-        
-        
+
+        // Start our config script
         $config = '
             document.addEventListener("DOMContentLoaded", function () {
-
                 const ctx_'.$this->id.' = document.getElementById("chart_'.$this->id.'")
-            
                 const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
                     type: "line",
                     data: {
                         labels: ['.$labels.'],
                         datasets: [';
-                        
+
+        // Add in our datasets
         foreach($datasets as $index=>$dataset) {
             if($index > 0)
                 $config .= $dataset['dataset'];
         }
-        
-                        
-                        
-        $config .=      '
+
+        // End our config script
+        $config .=  '
                         ],
                     },
                     options: {
@@ -149,17 +119,8 @@ class ContentLineChart extends ContentTable
             });
         ';
 
+        // Add our config script to the bottom of the <body> tag
         $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 	}   
 }
 
