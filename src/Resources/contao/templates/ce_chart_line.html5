@@ -1,3 +1,4 @@
-<div class="ce_chart_wrapper <?= $this->cssId ?>">
-    <canvas id="myChart" width="400" height="400"></canvas>
+
+<div class="ce_chart_wrapper ">
+    <canvas id="chart_<?= $this->id ?>" width="400" height="400"></canvas>
 </div>
