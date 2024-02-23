@@ -28,7 +28,7 @@ class ContentBarChart extends ContentTable
 	public function compile()
 	{
 		// Run the initial compile function just to be cool like that
-        parent::compile();
+        //parent::compile();
 	}
 
     /**
@@ -44,83 +44,88 @@ class ContentBarChart extends ContentTable
     
         // Assemble our table data into usable formats
         $rows = \StringUtil::deserialize($this->tableitems, true);
+        
+        if($rows != null) {
+        
+            // Assemble our label data as a string
+            $labels = '';
+            for ($x = 1; $x < count($rows[0]); $x++) {
+                $labels .= '"'.$rows[0][$x].'"';
+                if($x != count($rows[0])-1) { $labels .= ', '; }
+            }
+        
+            // Assemble our datasets
+            $datasets = array();
+            foreach($rows as $index=>$row) {
+                
+                $datasets[$index]['label'] = $row[0];
+                $datasets[$index]['data_string'] = '';
+                
+                for($x = 1; $x < count($row); $x++) {
     
-        // Assemble our label data as a string
-        $labels = '';
-        for ($x = 1; $x < count($rows[0]); $x++) {
-            $labels .= '"'.$rows[0][$x].'"';
-            if($x != count($rows[0])-1) { $labels .= ', '; }
-        }
-    
-        // Assemble our datasets
-        $datasets = array();
-        foreach($rows as $index=>$row) {
-            
-            $datasets[$index]['label'] = $row[0];
-            $datasets[$index]['data_string'] = '';
-            
-            for($x = 1; $x < count($row); $x++) {
-
-                $datasets[$index]['data'] .= '"' . $row[$x] . '"';
-                if($x != count($row)-1) { $datasets[$index]['data'] .= ', '; }
+                    $datasets[$index]['data'] .= '"' . $row[$x] . '"';
+                    if($x != count($row)-1) { $datasets[$index]['data'] .= ', '; }
+                    
+                }
+                
+                $datasets[$index]['dataset'] = "
+                {
+                    label: '".$datasets[$index]['label']."',
+                    data: [".$datasets[$index]['data']."],
+                    borderWidth: 1,
+                },
+                ";
                 
             }
             
-            $datasets[$index]['dataset'] = "
-            {
-                label: '".$datasets[$index]['label']."',
-                data: [".$datasets[$index]['data']."],
-                borderWidth: 1,
-            },
-            ";
+            // Include Chart.js and our configuration script
+            $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
+    
+            // Start our config script
+            $config = '
+                document.addEventListener("DOMContentLoaded", function () {
+                    const ctx_'.$this->id.' = document.getElementById("chart_'.$this->id.'")
+                    const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
+                        type: "bar",
+                        data: {
+                            labels: ['.$labels.'],
+                            datasets: [';
+    
+            // Add in our datasets
+            foreach($datasets as $index=>$dataset) {
+                if($index > 0)
+                    $config .= $dataset['dataset'];
+            }
+    
+            // End our config script
+            $config .=  '
+                            ],
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                },
+                            },
+                            plugins: {
+                              legend: {
+                                position: "top",
+                              },
+                              title: {
+                                display: true,
+                                text: "'.$datasets[0]['label'].'"
+                              }
+                            }
+                        },
+                    });
+                });
+            ';
+    
+            // Add our config script to the bottom of the <body> tag
+            $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
             
         }
         
-        // Include Chart.js and our configuration script
-        $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
-
-        // Start our config script
-        $config = '
-            document.addEventListener("DOMContentLoaded", function () {
-                const ctx_'.$this->id.' = document.getElementById("chart_'.$this->id.'")
-                const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
-                    type: "bar",
-                    data: {
-                        labels: ['.$labels.'],
-                        datasets: [';
-
-        // Add in our datasets
-        foreach($datasets as $index=>$dataset) {
-            if($index > 0)
-                $config .= $dataset['dataset'];
-        }
-
-        // End our config script
-        $config .=  '
-                        ],
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                            },
-                        },
-                        plugins: {
-                          legend: {
-                            position: "top",
-                          },
-                          title: {
-                            display: true,
-                            text: "'.$datasets[0]['label'].'"
-                          }
-                        }
-                    },
-                });
-            });
-        ';
-
-        // Add our config script to the bottom of the <body> tag
-        $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
 	}
 }
 
