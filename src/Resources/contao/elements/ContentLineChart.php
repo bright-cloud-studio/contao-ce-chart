@@ -10,7 +10,7 @@
 
 namespace Bcs\ChartBundle;
 
-use Contao;
+use Contao\ContentTable;
 
 class ContentLineChart extends ContentTable
 {
