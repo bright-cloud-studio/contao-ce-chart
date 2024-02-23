@@ -10,9 +10,9 @@
 
 namespace Bcs\ChartBundle;
 
-use Contao;
+use Contao\ContentTable;
 
-class ContentBarChart extends ContentText
+class ContentBarChart extends ContentTable
 {
 
 	/**
