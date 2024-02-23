@@ -44,14 +44,11 @@ class ContentBarChart extends \ContentText
         $GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
 
         // Inline script in the <header>
-        $GLOBALS['TL_HEAD']['chart_injection'] = '<script>alert("ding");</script>';
+        //$GLOBALS['TL_HEAD']['chart_injection'] = '<script>alert("ding");</script>';
 
         // Inline script in the <body> at the bottom
-        $GLOBALS['TL_BODY']['chart_injection'] = '<script>alert("bing bong noise");</script>';
-
+        //$GLOBALS['TL_BODY']['chart_injection'] = '<script>alert("bing bong noise");</script>';
         
 	}
 
-
-    
 }
