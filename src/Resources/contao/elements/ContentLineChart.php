@@ -49,11 +49,53 @@ class ContentLineChart extends ContentTable
         
         // Assemble our table data into usable formats
         $rows = \StringUtil::deserialize($this->tableitems, true);
+        
+        //echo "<pre>";
+        //print_r($rows);
+        //echo "</pre>";
+        //die();
+        
+        // Assemble our label data as a string
+        $labels = '';
+        for ($x = 1; $x < count($rows[0]); $x++) {
+            $labels .= '"'.$rows[0][$x].'"';
+            if($x != count($rows[0])-1) { $labels .= ', '; }
+        }
+        
+
+        // Assemble our datasets
+        $datasets = array();
+        foreach($rows as $index=>$row) {
+            
+            $datasets[$index]['label'] = $row[0];
+            $datasets[$index]['data_string'] = '';
+            
+            for($x = 1; $x < count($row); $x++) {
+
+                $datasets[$index]['data'] .= '"' . $row[$x] . '"';
+                if($x != count($row)-1) { $datasets[$index]['data'] .= ', '; }
+                
+            }
+            
+            $datasets[$index]['dataset'] = "
+            {
+                label: '".$datasets[$index]['label']."',
+                data: [".$datasets[$index]['data']."],
+                borderWidth: 1,
+            },
+            ";
+            
+        }
+        
+        //echo "<pre>";
+        //print_r($datasets);
+        //echo "</pre>";
+        //die();
+        
+        
+       
 		
-		//echo "<pre>";
-		//print_r($rows);
-		//echo "</pre>";
-		//die();
+		
         
         
         // Include Chart.js and our configuration script
@@ -74,29 +116,17 @@ class ContentLineChart extends ContentTable
                 const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
                     type: "line",
                     data: {
-                        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                        datasets: [
-                            {
-                                label: "# of Votes",
-                                data: [, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    "rgba(255, 99, 132, 0.2)",
-                                    "rgba(54, 162, 235, 0.2)",
-                                    "rgba(255, 206, 86, 0.2)",
-                                    "rgba(75, 192, 192, 0.2)",
-                                    "rgba(153, 102, 255, 0.2)",
-                                    "rgba(255, 159, 64, 0.2)",
-                                ],
-                                borderColor: [
-                                    "rgba(255, 99, 132, 1)",
-                                    "rgba(54, 162, 235, 1)",
-                                    "rgba(255, 206, 86, 1)",
-                                    "rgba(75, 192, 192, 1)",
-                                    "rgba(153, 102, 255, 1)",
-                                    "rgba(255, 159, 64, 1)",
-                                ],
-                                borderWidth: 1,
-                            },
+                        labels: ['.$labels.'],
+                        datasets: [';
+                        
+        foreach($datasets as $index=>$dataset) {
+            if($index > 0)
+                $config .= $dataset['dataset'];
+        }
+        
+                        
+                        
+        $config .=      '
                         ],
                     },
                     options: {
@@ -105,6 +135,15 @@ class ContentLineChart extends ContentTable
                                 beginAtZero: true,
                             },
                         },
+                        plugins: {
+                          legend: {
+                            position: "top",
+                          },
+                          title: {
+                            display: true,
+                            text: "'.$datasets[0]['label'].'"
+                          }
+                        }
                     },
                 });
             });
