@@ -133,7 +133,7 @@ class ContentLineChart extends ContentTable
 
             if('yes' == 'yes') {
 
-                $config .= '
+                $config .= "
                             elements: {
                               line: {
                                     tension: 5,
@@ -141,7 +141,7 @@ class ContentLineChart extends ContentTable
                                     borderWidth: 10
                                 }
                               },
-                ';
+                ";
             }
             
             
