@@ -36,11 +36,14 @@ class ContentBarChart extends \ContentText
 	 */
 	public function __construct($objElement, $strColumn='main')
 	{
+        // Run the originally construct function, if there is one
         parent::__construct($objElement, $strColumn='main');
+
+        // Link script files in the <header>
         $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
         $GLOBALS['TL_JAVASCRIPT']['chart_script'] = 'bundles/bcschart/scripts/contao_ce_chart.js';
 
-        // Testing injecting
+        // Inline script in the <header>
         $GLOBALS['TL_HEAD']['chart_injection'] = '<script>alert("ding");</script>';
 
         
