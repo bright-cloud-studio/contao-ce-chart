@@ -140,7 +140,7 @@ class ContentLineChart extends ContentTable
                                     borderColor: '".$this->line_border_color."',
                                     borderWidth: ".$this->line_border_width.",
                                     borderDash: ".$this->line_border_dash.",
-                                    borderJointStyle: '".$this->line_border_joint_style."'
+                                    borderJointStyle: '".$this->line_border_joint_style."',
                                     backgroundColor: '".$this->line_background_color."',
                                     fill: ".$this->line_fill.",
                                     
