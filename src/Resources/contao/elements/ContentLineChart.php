@@ -101,8 +101,11 @@ class ContentLineChart extends ContentTable
             $config .=  '
                             ],
                         },
-                        options: {
-                            scales: {
+                        options: {';
+
+            
+            
+            $config .= '   scales: {
                                 y: {
                                     beginAtZero: true,
                                 },
