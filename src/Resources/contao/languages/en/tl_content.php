@@ -10,7 +10,8 @@
   
 
 /* Legends */
-$GLOBALS['TL_LANG']['tl_content']['dataset_legend']    = 'Dataset Details';
+$GLOBALS['TL_LANG']['tl_content']['dataset_legend']        = 'Dataset Details';
+$GLOBALS['TL_LANG']['tl_content']['chart_config_legend']   = 'Chart Configuration Settings';
 
 /* Fields */
 $GLOBALS['TL_LANG']['tl_content']['glide_type']          = array('Glide Type', 'Select the \'type\' setting for Glide');
