@@ -136,13 +136,13 @@ class ContentLineChart extends ContentTable
                 $config .= "
                             elements: {
                               line: {
-                                    tension: 1,
-                                    borderColor: '#ff00ff',
-                                    borderWidth: 5,
-                                    borderDash: [0, 0],
-                                    borderJointStyle: 'miter'
-                                    backgroundColor: '#ff0000',
-                                    fill: false,
+                                    tension: ".$this->line_tension.",
+                                    borderColor: '".$this->line_border_color."',
+                                    borderWidth: ".$this->line_border_width.",
+                                    borderDash: ".$this->line_border_dash.",
+                                    borderJointStyle: '".$this->line_border_joint_style."'
+                                    backgroundColor: '".$this->line_background_color."',
+                                    fill: ".$this->line_fill.",
                                     
                                     
                                 },
