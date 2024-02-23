@@ -138,11 +138,12 @@ class ContentLineChart extends ContentTable
                               line: {
                                     tension: 1,
                                     borderColor: '#ff00ff',
-                                    backgroundColor: '#ff0000',
                                     borderWidth: 5,
                                     borderDash: [0, 0],
-                                    fill: false,
                                     borderJointStyle: 'miter'
+                                    backgroundColor: '#ff0000',
+                                    fill: false,
+                                    
                                     
                                 },
                                 point: {
