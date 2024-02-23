@@ -21,24 +21,6 @@ $arrFields = array(
 		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
 		'sql'                      => "varchar(32) NOT NULL default 'slider'"
     ),
-    'starting_slide'            => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['starting_slide'],
-        'inputType'                => 'text',
-		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default ''"
-    ),
-    'slides_to_show'            => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['slides_to_show'],
-        'inputType'                => 'text',
-		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default ''"
-    ),
-    'slide_padding'            => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['slide_padding'],
-        'inputType'                => 'text',
-		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default ''"
-    )
 );
 
-$dc['fields'] = array_merge($dc['fields'], $arrFields);
+//$dc['fields'] = array_merge($dc['fields'], $arrFields);
