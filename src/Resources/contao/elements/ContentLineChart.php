@@ -136,9 +136,21 @@ class ContentLineChart extends ContentTable
                 $config .= "
                             elements: {
                               line: {
-                                    tension: 5,
-                                    backgroundColor: '#ff00ff',
-                                    borderWidth: 10
+                                    tension: 1,
+                                    borderColor: '#ff00ff',
+                                    backgroundColor: '#ff0000',
+                                    borderWidth: 5,
+                                    borderDash: [0, 0],
+                                    fill: false,
+                                    borderJointStyle: 'miter'
+                                    
+                                },
+                                point: {
+                                    radius: 10,
+                                    pointStyle: 'star',
+                                    backgroundColor: '#ff0000',
+                                    borderWidth: 5,
+                                    borderColor: '#00ff00',
                                 }
                               },
                 ";
@@ -147,7 +159,7 @@ class ContentLineChart extends ContentTable
             
             $config .= '   scales: {
                                 y: {
-                                    beginAtZero: true,
+                                    beginAtZero: false,
                                 },
                             },
                             plugins: {
