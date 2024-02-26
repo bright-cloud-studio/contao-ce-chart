@@ -141,7 +141,7 @@ class ContentBarChart extends ContentTable
                                     borderColor: ".$this->bar_border_color.",
                                     borderRadius: ".$this->bar_border_radius.",
                                     inflateAmount: '".$this->bar_inflate_amount."',
-                                    pointStyle: 'star'
+                                    pointStyle: '".$this->bar_point_style."',
                                     
                                     
                                 }
