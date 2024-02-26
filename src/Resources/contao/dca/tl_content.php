@@ -77,7 +77,7 @@ $arrFields = array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_width'],
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
     'bar_border_color'        => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_color'],
@@ -90,26 +90,26 @@ $arrFields = array(
         'inputType'                => 'select',
 		'options'                  => array('start' => 'Start', 'end' => 'End', 'middle' => 'Middle', 'bottom' => 'Bottom', 'left' => 'Left', 'top' => 'Top', 'right' => 'Right', 'false' => 'False'),
 		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
-		'sql'                      => "varchar(32) NOT NULL default 'false'"
+		'sql'                      => "varchar(32) NOT NULL default 'start'"
     ),
     'bar_border_radius'        => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_radius'],
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
     'bar_inflate_amount'        => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_inflate_amount'],
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+		'sql'                      => "varchar(12) NOT NULL default 'auto'"
     ),
     'bar_point_style'                => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_fill'],
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_point_style'],
         'inputType'                => 'select',
 		'options'                  => array('circle' => 'Circle', 'cross' => 'Cross', 'crossRot' => 'Cross Rot', 'dash' => 'Dash', 'line' => 'Line', 'rect' => 'Rect', 'rectRounded' => 'Rect Rounded', 'rectRot' => 'Rect Rot', 'star' => 'Star', 'triangle' => 'Triangle', 'false' => 'False'),
 		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
-		'sql'                      => "varchar(32) NOT NULL default 'false'"
+		'sql'                      => "varchar(32) NOT NULL default 'circle'"
     ),
 
 
