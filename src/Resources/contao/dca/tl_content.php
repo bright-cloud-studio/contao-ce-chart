@@ -65,6 +65,57 @@ $arrFields = array(
 		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
 		'sql'                      => "varchar(32) NOT NULL default 'false'"
     ),
+
+
+    'bar_background_color'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_background_color'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+    ),
+    'bar_border_width'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_width'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+    ),
+    'bar_border_color'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_color'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+    ),
+    'bar_border_skipped'                => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_skipped'],
+        'inputType'                => 'select',
+		'options'                  => array('start' => 'Start', 'end' => 'End', 'middle' => 'Middle', 'bottom' => 'Bottom', 'left' => 'Left', 'top' => 'Top', 'right' => 'Right', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'false'"
+    ),
+    'bar_border_radius'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_radius'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+    ),
+    'bar_inflate_amount'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_inflate_amount'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
+    ),
+    'bar_point_style'                => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_fill'],
+        'inputType'                => 'select',
+		'options'                  => array('circle' => 'Circle', 'cross' => 'Cross', 'crossRot' => 'Cross Rot', 'dash' => 'Dash', 'line' => 'Line', 'rect' => 'Rect', 'rectRounded' => 'Rect Rounded', 'rectRot' => 'Rect Rot', 'star' => 'Star', 'triangle' => 'Triangle', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'false'"
+    ),
+
+
+
+
+    
 );
 
 $dc['fields'] = array_merge($dc['fields'], $arrFields);
