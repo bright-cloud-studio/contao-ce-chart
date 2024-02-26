@@ -85,7 +85,7 @@ class ContentBarChart extends ContentTable
                 document.addEventListener("DOMContentLoaded", function () {
                     const ctx_'.$this->id.' = document.getElementById("chart_'.$this->id.'")
                     const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
-                        type: "line",
+                        type: "bar",
                         data: {
                             labels: ['.$labels.'],
                             datasets: [';
