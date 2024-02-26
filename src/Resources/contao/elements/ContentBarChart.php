@@ -135,23 +135,15 @@ class ContentBarChart extends ContentTable
 
                 $config .= "
                             elements: {
-                              line: {
-                                    tension: ".$this->line_tension.",
-                                    borderColor: '".$this->line_border_color."',
-                                    borderWidth: ".$this->line_border_width.",
-                                    borderDash: ".$this->line_border_dash.",
-                                    borderJointStyle: '".$this->line_border_joint_style."',
-                                    backgroundColor: '".$this->line_background_color."',
-                                    fill: ".$this->line_fill.",
+                              bar: {
+                                    backgroundColor: ".$this->bar_background_color.",
+                                    borderWidth: '".$this->bar_border_width."',
+                                    borderColor: ".$this->bar_border_color.",
+                                    borderRadius: ".$this->bar_border_radius.",
+                                    inflateAmount: '".$this->bar_inflate_amount."',
+                                    pointStyle: 'star'
                                     
                                     
-                                },
-                                point: {
-                                    radius: 10,
-                                    pointStyle: 'star',
-                                    backgroundColor: '#ff0000',
-                                    borderWidth: 5,
-                                    borderColor: '#00ff00',
                                 }
                               },
                 ";
