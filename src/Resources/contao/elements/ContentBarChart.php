@@ -39,9 +39,9 @@ class ContentBarChart extends ContentTable
 	 */
 	public function __construct($objElement, $strColumn='main')
 	{
-	    // Run the original construct function
+	     // Run the original construct function
         parent::__construct($objElement, $strColumn='main');
-    
+        
         // Assemble our table data into usable formats
         $rows = \StringUtil::deserialize($this->tableitems, true);
         
@@ -72,7 +72,6 @@ class ContentBarChart extends ContentTable
                 {
                     label: '".$datasets[$index]['label']."',
                     data: [".$datasets[$index]['data']."],
-                    borderWidth: 1,
                 },
                 ";
                 
@@ -86,7 +85,7 @@ class ContentBarChart extends ContentTable
                 document.addEventListener("DOMContentLoaded", function () {
                     const ctx_'.$this->id.' = document.getElementById("chart_'.$this->id.'")
                     const line_chart__'.$this->id.' = new Chart(ctx_'.$this->id.', {
-                        type: "bar",
+                        type: "line",
                         data: {
                             labels: ['.$labels.'],
                             datasets: [';
@@ -101,10 +100,67 @@ class ContentBarChart extends ContentTable
             $config .=  '
                             ],
                         },
-                        options: {
-                            scales: {
+                        options: {';
+
+            if($this->animate == 'yes') {
+
+                $config .= '
+                            transitions: {
+                              show: {
+                                animations: {
+                                  x: {
+                                    from: 0
+                                  },
+                                  y: {
+                                    from: 0
+                                  }
+                                }
+                              },
+                              hide: {
+                                animations: {
+                                  x: {
+                                    to: 0
+                                  },
+                                  y: {
+                                    to: 0
+                                  }
+                                }
+                              }
+                            },
+                ';
+            }
+
+
+            if('yes' == 'yes') {
+
+                $config .= "
+                            elements: {
+                              line: {
+                                    tension: ".$this->line_tension.",
+                                    borderColor: '".$this->line_border_color."',
+                                    borderWidth: ".$this->line_border_width.",
+                                    borderDash: ".$this->line_border_dash.",
+                                    borderJointStyle: '".$this->line_border_joint_style."',
+                                    backgroundColor: '".$this->line_background_color."',
+                                    fill: ".$this->line_fill.",
+                                    
+                                    
+                                },
+                                point: {
+                                    radius: 10,
+                                    pointStyle: 'star',
+                                    backgroundColor: '#ff0000',
+                                    borderWidth: 5,
+                                    borderColor: '#00ff00',
+                                }
+                              },
+                ";
+            }
+            
+            
+            $config .= '   scales: {
                                 y: {
-                                    beginAtZero: true,
+                                    beginAtZero: false,
                                 },
                             },
                             plugins: {
@@ -123,7 +179,6 @@ class ContentBarChart extends ContentTable
     
             // Add our config script to the bottom of the <body> tag
             $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
-            
         }
         
 	}
