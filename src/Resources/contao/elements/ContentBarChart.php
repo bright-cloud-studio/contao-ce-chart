@@ -136,11 +136,11 @@ class ContentBarChart extends ContentTable
                 $config .= "
                             elements: {
                               bar: {
-                                    backgroundColor: #".$this->bar_background_color.",
-                                    borderWidth: '".$this->bar_border_width."',
-                                    borderColor: #".$this->bar_border_color.",
+                                    backgroundColor: '".$this->bar_background_color."',
+                                    borderWidth: ".$this->bar_border_width.",
+                                    borderColor: '".$this->bar_border_color."',
                                     borderRadius: ".$this->bar_border_radius.",
-                                    inflateAmount: '".$this->bar_inflate_amount."',
+                                    inflateAmount: ".$this->bar_inflate_amount.",
                                     pointStyle: '".$this->bar_point_style."',
                                     
                                     
