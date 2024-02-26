@@ -22,3 +22,12 @@ $GLOBALS['TL_LANG']['tl_content']['line_border_dash']          = array('Line Bor
 $GLOBALS['TL_LANG']['tl_content']['line_border_joint_style']          = array('Line Stroke Joint Style', 'Choose from different styles for the joint styles');
 $GLOBALS['TL_LANG']['tl_content']['line_background_color']          = array('Line Background Color', 'HTML color for the line background');
 $GLOBALS['TL_LANG']['tl_content']['line_fill']          = array('Line Fill', 'Choose if the lines should fill the background to the bottom of the chart');
+
+
+$GLOBALS['TL_LANG']['tl_content']['bar_background_color']          = array('Bar Background Color', 'Enter comma separated HTML color values for the number of bars there are');
+$GLOBALS['TL_LANG']['tl_content']['bar_border_width']          = array('Bar Stroke Width', 'The thickness of the bar stroke');
+$GLOBALS['TL_LANG']['tl_content']['bar_border_color']          = array('Bar Stroke Color', 'Enter comma separated HTML colors values for the bar strokes');
+$GLOBALS['TL_LANG']['tl_content']['bar_border_skipped']          = array('Bar Stroke Skipped', 'Choose the stroke skipped style');
+$GLOBALS['TL_LANG']['tl_content']['bar_border_radius']          = array('Bar Stroke Radius', 'Enter the bar radius');
+$GLOBALS['TL_LANG']['tl_content']['bar_inflate_amount']          = array('Bar Inflate Amount', 'Enter how much the bars should inflate');
+$GLOBALS['TL_LANG']['tl_content']['bar_point_style']          = array('Point Style', 'Select the point style for the bar, or if there should be none at all');
