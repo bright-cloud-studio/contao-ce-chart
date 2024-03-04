@@ -42,6 +42,15 @@ class ContentLineChart extends ContentTable
 	    // Run the original construct function
         parent::__construct($objElement, $strColumn='main');
         
+        
+        
+        //echo "<pre>";
+        //print_r(unserialize($this->line_background_colors));
+        //echo "</pre>";
+        
+        
+        
+        
         // Assemble our table data into usable formats
         $rows = \StringUtil::deserialize($this->tableitems, true);
         
@@ -132,16 +141,26 @@ class ContentLineChart extends ContentTable
 
 
             if('yes' == 'yes') {
+                
+                
+                $bg_color_array = unserialize($this->line_background_colors);
+                $bg_colors = '';
+                for($x = 0; $x < count($bg_color_array); $x++) {
+                    
+                    $bg_colors .= "'rgba(".$bg_color_array[$x]['bg_r'].", ".$bg_color_array[$x]['bg_g'].", ".$bg_color_array[$x]['bg_b'].", ".$bg_color_array[$x]['bg_a'].")'";
+                    if($x != (count($bg_color_array) -1))
+                        $bg_colors .= ', ';
+                }
 
                 $config .= "
                             elements: {
                               line: {
                                     tension: ".$this->line_tension.",
-                                    borderColor: '".$this->line_border_color."',
+                                    borderColor: [".$bg_colors."],
                                     borderWidth: ".$this->line_border_width.",
                                     borderDash: ".$this->line_border_dash.",
                                     borderJointStyle: '".$this->line_border_joint_style."',
-                                    backgroundColor: '".$this->line_background_color."',
+                                    backgroundColor: [".$bg_colors."],
                                     fill: ".$this->line_fill.",
                                     
                                     
