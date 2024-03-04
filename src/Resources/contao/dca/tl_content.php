@@ -127,13 +127,13 @@ $arrFields = array(
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
-                'bg_b' => [
+                'bg_g' => [
                     'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
-                'bg_g' => [
-                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_g'],
+                'bg_b' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
