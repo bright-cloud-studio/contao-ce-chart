@@ -116,30 +116,25 @@ $arrFields = array(
 
 
 
-    'background_colors'                => array(
+    'line_background_colors'       => array(
         'label'     => &$GLOBALS['TL_LANG']['tl_content']['background_colors'],
         'exclude'   => true,
         'inputType' => 'multiColumnWizard',
         'eval'      => [
             'columnFields' => [
-                'ts_client_os'      => [
-                    'label'     => &$GLOBALS['TL_LANG']['tl_theme']['ts_client_os'],
-                    'exclude'   => true,
-                    'inputType' => 'select',
-                    'eval'      => [
-                        'style'              => 'width:250px',
-                        'includeBlankOption' => true,
-                    ],
-                    'options'   => [
-                        'option1' => 'Option 1',
-                        'option2' => 'Option 2',
-                    ],
-                ],
-                'ts_client_browser' => [
-                    'label'     => &$GLOBALS['TL_LANG']['tl_theme']['ts_client_browser'],
+                'bg_color'      => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_color'],
                     'exclude'   => true,
                     'inputType' => 'text',
-                    'eval'      => [ 'style' => 'width:180px' ],
+                    'eval'      => [
+                        'colorpicker' => true,
+                        'includeBlankOption' => true,
+                    ]
+                ],
+                'bg_alpha' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_alpha'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
                 ],
             ],
         ],
