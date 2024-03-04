@@ -122,18 +122,23 @@ $arrFields = array(
         'inputType' => 'multiColumnWizard',
         'eval'      => [
             'columnFields' => [
-                'bg_color'      => [
-                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_color'],
+                'bg_r' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_r'],
                     'exclude'   => true,
                     'inputType' => 'text',
-                    'eval'      => [
-                        'colorpicker' => true,
-                        'isHexColor' => false,
-                        'includeBlankOption' => true,
-                    ]
                 ],
-                'bg_alpha' => [
-                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_alpha'],
+                'bg_b' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bg_g' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_g'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bg_a' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_a'],
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
