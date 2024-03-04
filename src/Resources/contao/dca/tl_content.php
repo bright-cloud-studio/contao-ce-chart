@@ -128,6 +128,7 @@ $arrFields = array(
                     'inputType' => 'text',
                     'eval'      => [
                         'colorpicker' => true,
+                        'isHexColor' => false,
                         'includeBlankOption' => true,
                     ]
                 ],
