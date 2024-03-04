@@ -19,7 +19,8 @@
     },
     "require":{
         "php": "^7.4 || ^8.0",
-        "contao/core-bundle": "^4.13"
+        "contao/core-bundle": "^4.13",
+        "menatwork/contao-multicolumnwizard-bundle": "^3.6.4"
     },
     "extra":{
         "contao-manager-plugin": "Bcs\\ChartBundle\\ContaoManager\\Plugin"
