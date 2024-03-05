@@ -142,7 +142,7 @@ class ContentLineChart extends ContentTable
 
             if('yes' == 'yes') {
                 
-                
+                // Format background colors as datastring
                 $bg_color_array = unserialize($this->line_background_colors);
                 $bg_colors = '';
                 for($x = 0; $x < count($bg_color_array); $x++) {
@@ -151,15 +151,25 @@ class ContentLineChart extends ContentTable
                     if($x != (count($bg_color_array) -1))
                         $bg_colors .= ', ';
                 }
+                
+                // Format border colors as datastring
+                $bd_color_array = unserialize($this->line_border_colors);
+                $bd_colors = '';
+                for($x = 0; $x < count($bd_color_array); $x++) {
+                    
+                    $bd_colors .= "'rgba(".$bd_color_array[$x]['bd_r'].", ".$bd_color_array[$x]['bd_g'].", ".$bd_color_array[$x]['bd_b'].", ".$bd_color_array[$x]['bd_a'].")'";
+                    if($x != (count($bd_color_array) -1))
+                        $bd_colors .= ', ';
+                }
 
                 $config .= "
                             elements: {
                               line: {
                                     tension: ".$this->line_tension.",
-                                    borderColor: [".$bg_colors."],
                                     borderWidth: ".$this->line_border_width.",
                                     borderDash: ".$this->line_border_dash.",
                                     borderJointStyle: '".$this->line_border_joint_style."',
+                                    borderColor: [".$bd_colors."],
                                     backgroundColor: [".$bg_colors."],
                                     fill: ".$this->line_fill.",
                                     
