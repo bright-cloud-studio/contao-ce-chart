@@ -12,6 +12,7 @@
 /* Legends */
 $GLOBALS['TL_LANG']['tl_content']['dataset_legend']        = 'Dataset Details';
 $GLOBALS['TL_LANG']['tl_content']['chart_line_config_legend']   = 'Chart - Line Configuration';
+$GLOBALS['TL_LANG']['tl_content']['chart_bar_config_legend']   = 'Chart - Bar Configuration';
 
 /* Fields */
 $GLOBALS['TL_LANG']['tl_content']['animate']          = array('Show/Hide Animation', 'Choose if the lines should animate when showing or hiding');
@@ -52,4 +53,16 @@ $GLOBALS['TL_LANG']['tl_content']['line_point_border_width']          = array('P
 $GLOBALS['TL_LANG']['tl_content']['line_point_border_color']          = array('Point Border Color', 'Enter an HTML color for the point border color');
 
 
+$GLOBALS['TL_LANG']['tl_content']['bar_background_colors_legend']   = 'Chart - Bar Background Colors';
+$GLOBALS['TL_LANG']['tl_content']['bar_background_colors']          = array('Bar Background Colors', 'Enter the RGBA values for the invidivudal bar background colors');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_r']          = array('Red', 'Red Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_g']          = array('Green', 'Green Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_b']          = array('Blue', 'Blue Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_a']          = array('Alpha', 'Alpha Value');
 
+$GLOBALS['TL_LANG']['tl_content']['bar_border_colors_legend']   = 'Chart - Bar Background Colors';
+$GLOBALS['TL_LANG']['tl_content']['bar_border_colors']          = array('Bar Background Colors', 'Enter the RGBA values for the invidivudal bar background colors');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_r']          = array('Red', 'Red Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_g']          = array('Green', 'Green Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_b']          = array('Blue', 'Blue Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bg_a']          = array('Alpha', 'Alpha Value');
