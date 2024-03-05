@@ -120,26 +120,26 @@ $arrFields = array(
 		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
     'line_point_style'           => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_point_style'],
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_style'],
         'inputType'                => 'select',
 		'options'                  => array('circle' => 'Circle', 'cross' => 'Cross', 'crossRot' => 'Cross Rot', 'dash' => 'Dash', 'line' => 'Line', 'rect' => 'Rect', 'rectRounded' => 'Rect Rounded', 'rectRot' => 'Rect Rot', 'star' => 'Star', 'triangle' => 'Triangle', 'false' => 'False'),
 		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
 		'sql'                      => "varchar(32) NOT NULL default 'circle'"
     ),
-    'line_background_color'         => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_radius'],
+    'line_point_background_color'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_background_color'],
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
 		'sql'                      => "varchar(12) NOT NULL default '#000000'"
     ),
-    'line_border_width'         => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_width'],
+    'line_point_border_width'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_border_width'],
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
 		'sql'                      => "varchar(12) NOT NULL default '2'"
     ),
-    'line_border_color'         => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_color'],
+    'line_point_border_color'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_border_color'],
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
 		'sql'                      => "varchar(12) NOT NULL default '#000000'"
