@@ -152,22 +152,22 @@ $arrFields = array(
         'inputType' => 'multiColumnWizard',
         'eval'      => [
             'columnFields' => [
-                'bg_r' => [
+                'bd_r' => [
                     'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_r'],
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
-                'bg_g' => [
+                'bd_g' => [
                     'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
-                'bg_b' => [
+                'bd_b' => [
                     'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
                     'exclude'   => true,
                     'inputType' => 'text',
                 ],
-                'bg_a' => [
+                'bd_a' => [
                     'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_a'],
                     'exclude'   => true,
                     'inputType' => 'text',
