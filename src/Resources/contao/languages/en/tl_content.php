@@ -62,7 +62,7 @@ $GLOBALS['TL_LANG']['tl_content']['b_bg_a']          = array('Alpha', 'Alpha Val
 
 $GLOBALS['TL_LANG']['tl_content']['bar_border_colors_legend']   = 'Chart - Bar Background Colors';
 $GLOBALS['TL_LANG']['tl_content']['bar_border_colors']          = array('Bar Background Colors', 'Enter the RGBA values for the invidivudal bar background colors');
-$GLOBALS['TL_LANG']['tl_content']['b_bg_r']          = array('Red', 'Red Value');
-$GLOBALS['TL_LANG']['tl_content']['b_bg_g']          = array('Green', 'Green Value');
-$GLOBALS['TL_LANG']['tl_content']['b_bg_b']          = array('Blue', 'Blue Value');
-$GLOBALS['TL_LANG']['tl_content']['b_bg_a']          = array('Alpha', 'Alpha Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bd_r']          = array('Red', 'Red Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bd_g']          = array('Green', 'Green Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bd_b']          = array('Blue', 'Blue Value');
+$GLOBALS['TL_LANG']['tl_content']['b_bd_a']          = array('Alpha', 'Alpha Value');
