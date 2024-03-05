@@ -133,12 +133,33 @@ class ContentBarChart extends ContentTable
 
             if('yes' == 'yes') {
 
+                // Format background colors as datastring
+                $bg_color_array = unserialize($this->bar_background_colors);
+                $bg_colors = '';
+                for($x = 0; $x < count($bg_color_array); $x++) {
+                    
+                    $bg_colors .= "'rgba(".$bg_color_array[$x]['bg_r'].", ".$bg_color_array[$x]['bg_g'].", ".$bg_color_array[$x]['bg_b'].", ".$bg_color_array[$x]['bg_a'].")'";
+                    if($x != (count($bg_color_array) -1))
+                        $bg_colors .= ', ';
+                }
+                
+                // Format border colors as datastring
+                $bd_color_array = unserialize($this->bar_border_colors);
+                $bd_colors = '';
+                for($x = 0; $x < count($bd_color_array); $x++) {
+                    
+                    $bd_colors .= "'rgba(".$bd_color_array[$x]['bd_r'].", ".$bd_color_array[$x]['bd_g'].", ".$bd_color_array[$x]['bd_b'].", ".$bd_color_array[$x]['bd_a'].")'";
+                    if($x != (count($bd_color_array) -1))
+                        $bd_colors .= ', ';
+                }
+
+                
                 $config .= "
                             elements: {
                               bar: {
-                                    backgroundColor: '".$this->bar_background_color."',
+                                    backgroundColor: [".$bg_colors."],
                                     borderWidth: ".$this->bar_border_width.",
-                                    borderColor: '".$this->bar_border_color."',
+                                    borderColor: [".$bd_colors."],
                                     borderRadius: ".$this->bar_border_radius.",
                                     inflateAmount: ".$this->bar_inflate_amount.",
                                     pointStyle: '".$this->bar_point_style."',
