@@ -176,11 +176,11 @@ class ContentLineChart extends ContentTable
                                     
                                 },
                                 point: {
-                                    radius: 10,
-                                    pointStyle: 'circle',
-                                    backgroundColor: '#ffffff',
-                                    borderWidth: 5,
-                                    borderColor: '#000000',
+                                    radius: ".$this->line_point_radius.",
+                                    pointStyle: '".$this->line_point_style."',
+                                    backgroundColor: ['#".$this->line_point_background_color."'],
+                                    borderWidth: ".$this->line_point_border_width.",
+                                    borderColor: ['#".$this->line_point_border_color."'],
                                 }
                               },
                 ";
