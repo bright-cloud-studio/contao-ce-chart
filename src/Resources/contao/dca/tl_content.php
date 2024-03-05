@@ -10,7 +10,7 @@
 
 // Get our default 'tl_content' DCA
 $dc = &$GLOBALS['TL_DCA']['tl_content'];
-$GLOBALS['TL_DCA']['tl_content']['palettes']['chart_line'] = '{type_legend},type,headline;{dataset_legend},tableitems;{chart_line_config_legend},animate,line_tension,line_border_color,line_border_width,line_border_dash,line_border_joint_style,line_background_color,line_fill;{line_border_colors_legend},line_border_colors;{line_background_colors_legend},line_background_colors;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['chart_line'] = '{type_legend},type,headline;{dataset_legend},tableitems;{chart_line_config_legend},animate,line_tension,line_border_width,line_border_dash,line_border_joint_style,line_fill;{line_border_colors_legend},line_border_colors;{line_background_colors_legend},line_background_colors;{line_point_legend},line_point_radius,line_point_style,line_point_background_color,line_point_border_width,line_point_border_color;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['chart_bar'] = '{type_legend},type,headline;{dataset_legend},tableitems;{chart_bar_config_legend},bar_background_color,bar_border_width,bar_border_color,bar_border_skipped,bar_border_radius,bar_inflate_amount,bar_point_style;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 
 $arrFields = array(
@@ -26,12 +26,6 @@ $arrFields = array(
         'inputType'                => 'text',
 		'eval'                     => array('tl_class'=>'w50'),
 		'sql'                      => "varchar(12) NOT NULL default '0'"
-    ),
-    'line_border_color'        => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_color'],
-        'inputType'                => 'text',
-		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
     ),
     'line_border_width'        => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_width'],
@@ -51,12 +45,6 @@ $arrFields = array(
 		'options'                  => array('round' => 'Round', 'bevel' => 'Bevel', 'miter' => 'Miter'),
 		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
 		'sql'                      => "varchar(32) NOT NULL default 'round'"
-    ),
-    'line_background_color'    => array(
-        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_background_color'],
-        'inputType'                => 'text',
-		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default '#ff00ff'"
     ),
     'line_fill'                => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_fill'],
