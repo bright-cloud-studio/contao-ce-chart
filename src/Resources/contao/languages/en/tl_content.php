@@ -30,18 +30,21 @@ $GLOBALS['TL_LANG']['tl_content']['bar_border_radius']          = array('Bar Str
 $GLOBALS['TL_LANG']['tl_content']['bar_inflate_amount']          = array('Bar Inflate Amount', 'Enter how much the bars should inflate');
 $GLOBALS['TL_LANG']['tl_content']['bar_point_style']          = array('Point Style', 'Select the point style for the bar, or if there should be none at all');
 
+$GLOBALS['TL_LANG']['tl_content']['line_border_colors_legend']   = 'Chart - Line Border Colors';
 $GLOBALS['TL_LANG']['tl_content']['line_border_colors']          = array('Line Border Colors', 'Enter the RGBA values for the invidivudal line border colors');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bd_r']          = array('Red', 'Red Value');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bd_g']          = array('Green', 'Green Value');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bd_b']          = array('Blue', 'Blue Value');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bd_a']          = array('Alpha', 'Alpha Value');
+$GLOBALS['TL_LANG']['tl_content']['bd_r']          = array('Red', 'Red Value');
+$GLOBALS['TL_LANG']['tl_content']['bd_g']          = array('Green', 'Green Value');
+$GLOBALS['TL_LANG']['tl_content']['bd_b']          = array('Blue', 'Blue Value');
+$GLOBALS['TL_LANG']['tl_content']['bd_a']          = array('Alpha', 'Alpha Value');
 
+$GLOBALS['TL_LANG']['tl_content']['line_background_colors_legend']   = 'Chart - Line Background Colors';
 $GLOBALS['TL_LANG']['tl_content']['line_background_colors']          = array('Line Background Colors', 'Enter the RGBA values for the invidivudal line background colors');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bg_r']          = array('Red', 'Red Value');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bg_g']          = array('Green', 'Green Value');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bg_b']          = array('Blue', 'Blue Value');
-$GLOBALS['TL_LANG']['tl_content']['line_border_colors']['bg_a']          = array('Alpha', 'Alpha Value');
+$GLOBALS['TL_LANG']['tl_content']['bg_r']          = array('Red', 'Red Value');
+$GLOBALS['TL_LANG']['tl_content']['bg_g']          = array('Green', 'Green Value');
+$GLOBALS['TL_LANG']['tl_content']['bg_b']          = array('Blue', 'Blue Value');
+$GLOBALS['TL_LANG']['tl_content']['bg_a']          = array('Alpha', 'Alpha Value');
 
+$GLOBALS['TL_LANG']['tl_content']['line_point_legend']   = 'Chart - Point Settings';
 $GLOBALS['TL_LANG']['tl_content']['line_point_radius']          = array('Point Radius', 'Enter the radius value for the line points');
 $GLOBALS['TL_LANG']['tl_content']['line_point_style']          = array('Point Style', 'Select the style the line points should use');
 $GLOBALS['TL_LANG']['tl_content']['line_point_background_color']      = array('Point Background Color', 'Enter an HTML color for the point background');
