@@ -138,7 +138,7 @@ class ContentBarChart extends ContentTable
                 $bg_colors = '';
                 for($x = 0; $x < count($bg_color_array); $x++) {
                     
-                    $bg_colors .= "'rgba(".$bg_color_array[$x]['bg_r'].", ".$bg_color_array[$x]['bg_g'].", ".$bg_color_array[$x]['bg_b'].", ".$bg_color_array[$x]['bg_a'].")'";
+                    $bg_colors .= "'rgba(".$bg_color_array[$x]['b_bg_r'].", ".$bg_color_array[$x]['b_bg_g'].", ".$bg_color_array[$x]['b_bg_b'].", ".$bg_color_array[$x]['b_bg_a'].")'";
                     if($x != (count($bg_color_array) -1))
                         $bg_colors .= ', ';
                 }
@@ -148,7 +148,7 @@ class ContentBarChart extends ContentTable
                 $bd_colors = '';
                 for($x = 0; $x < count($bd_color_array); $x++) {
                     
-                    $bd_colors .= "'rgba(".$bd_color_array[$x]['bd_r'].", ".$bd_color_array[$x]['bd_g'].", ".$bd_color_array[$x]['bd_b'].", ".$bd_color_array[$x]['bd_a'].")'";
+                    $bd_colors .= "'rgba(".$bd_color_array[$x]['b_bd_r'].", ".$bd_color_array[$x]['b_bd_g'].", ".$bd_color_array[$x]['b_bd_b'].", ".$bd_color_array[$x]['b_bd_a'].")'";
                     if($x != (count($bd_color_array) -1))
                         $bd_colors .= ', ';
                 }
