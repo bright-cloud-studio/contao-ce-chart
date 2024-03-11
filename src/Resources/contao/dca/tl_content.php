@@ -17,7 +17,7 @@ $arrFields = array(
     'chart_desc'             => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['chart_desc'],
         'inputType'                => 'textarea',
-		'eval'                     => array('tl_class'=>'w50'),
+		'eval'                     => array('tl_class'=>'w50', 'rte'->'tinyMCE'),
 		'sql'                      => "mediumtext NULL"
     ),
     'animate'                  => array(
