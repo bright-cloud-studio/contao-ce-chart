@@ -15,6 +15,7 @@ $GLOBALS['TL_LANG']['tl_content']['chart_line_config_legend']   = 'Chart - Line 
 $GLOBALS['TL_LANG']['tl_content']['chart_bar_config_legend']   = 'Chart - Bar Configuration';
 
 /* Fields */
+$GLOBALS['TL_LANG']['tl_content']['chart_desc']          = array('Chart Description', 'Enter a description that will be shown alongside this chart');
 $GLOBALS['TL_LANG']['tl_content']['animate']          = array('Show/Hide Animation', 'Choose if the lines should animate when showing or hiding');
 $GLOBALS['TL_LANG']['tl_content']['line_tension']          = array('Line Tension', 'Lower tension makes lines rigid, higher makes them smoother');
 $GLOBALS['TL_LANG']['tl_content']['line_border_width']          = array('Line Stroke Width', 'Changes the thickness of the line stroke');
