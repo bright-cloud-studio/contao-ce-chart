@@ -16,9 +16,9 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['chart_bar'] = '{type_legend},type,
 $arrFields = array(
     'chart_desc'             => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['chart_desc'],
-        'inputType'                => 'text',
+        'inputType'                => 'textarea',
 		'eval'                     => array('tl_class'=>'w50'),
-		'sql'                      => "varchar(12) NOT NULL default ''"
+		'sql'                      => "mediumtext NULL"
     ),
     'animate'                  => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['animate'],
