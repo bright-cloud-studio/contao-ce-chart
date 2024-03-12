@@ -1,4 +1,12 @@
-
-<div class="ce_chart_wrapper ">
+<div class="ce_line_chart_wrapper <?= $this->class ?>">
+    
+    <?php if ($this->headline): ?>
+    	<<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+	<?php endif; ?>
+    
     <canvas id="chart_<?= $this->id ?>" width="400" height="400"></canvas>
+    
+	<div class="chart_desc_wrapper">
+		<p class="chart_desc"><?= $this->chart_desc; ?></p>
+	</div>
 </div>
