@@ -4,9 +4,10 @@
     	<<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
 	<?php endif; ?>
     
-    <canvas id="chart_<?= $this->id ?>" width="400" height="400"></canvas>
+    <canvas id="chart_<?= $this->id ?>" width="100%" height="auto"></canvas>
     
 	<div class="chart_desc_wrapper">
 		<p class="chart_desc"><?= $this->chart_desc; ?></p>
 	</div>
+	
 </div>
