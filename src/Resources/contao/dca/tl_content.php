@@ -16,14 +16,14 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['chart_bar'] = '{type_legend},type,
 $arrFields = array(
     'label_x'             => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['label_x'],
-        'inputType'                => 'textarea',
-		'eval'                     => array('tl_class'=>'w50', 'rte'=>'tinyMCE'),
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
 		'sql'                      => "mediumtext NULL"
     ),
     'label_y'             => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['label_y'],
-        'inputType'                => 'textarea',
-		'eval'                     => array('tl_class'=>'w50', 'rte'=>'tinyMCE'),
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
 		'sql'                      => "mediumtext NULL"
     ),
     'chart_desc'             => array(
