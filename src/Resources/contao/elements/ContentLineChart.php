@@ -186,13 +186,15 @@ class ContentLineChart extends ContentTable
                 ";
             }
             
+            $show_y = 'false';
+            if($this->label_y != null) { $show_y = 'true'; }
             
             $config .= '   scales: {
                                 y: {
                                     beginAtZero: false,
                                     title: {
-                                        display: true,
-                                        text: "Testing 1 2 3"
+                                        display: '.$show_y.',
+                                        text: "'.$this->label_y.'"
                                     }
                                 },
                                 x: {
