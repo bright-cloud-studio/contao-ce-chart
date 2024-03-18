@@ -203,8 +203,8 @@ class ContentLineChart extends ContentTable
                                 x: {
                                     beginAtZero: false,
                                     title: {
-                                        display: '.$show_y.',
-                                        text: "'.$this->label_y.'"
+                                        display: '.$show_x.',
+                                        text: "'.$this->label_x.'"
                                     }
                                 },
                             },
