@@ -169,11 +169,27 @@ class ContentBarChart extends ContentTable
                               },
                 ";
             }
+
+            $show_y = 'false';
+            if($this->label_y != null) { $show_y = 'true'; }
             
+            $show_x = 'false';
+            if($this->label_x != null) { $show_x = 'true'; }
             
             $config .= '   scales: {
                                 y: {
                                     beginAtZero: false,
+                                    title: {
+                                        display: '.$show_y.',
+                                        text: "'.$this->label_y.'"
+                                    }
+                                },
+                                x: {
+                                    beginAtZero: false,
+                                    title: {
+                                        display: '.$show_x.',
+                                        text: "'.$this->label_x.'"
+                                    }
                                 },
                             },
                             plugins: {
