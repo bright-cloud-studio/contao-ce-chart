@@ -190,6 +190,17 @@ class ContentLineChart extends ContentTable
             $config .= '   scales: {
                                 y: {
                                     beginAtZero: false,
+                                    title: {
+                                        display: true,
+                                        text: "Testing 1 2 3"
+                                    }
+                                },
+                                x: {
+                                    beginAtZero: false,
+                                    title: {
+                                        display: true,
+                                        text: "Another One"
+                                    }
                                 },
                             },
                             plugins: {
