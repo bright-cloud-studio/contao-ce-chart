@@ -266,6 +266,13 @@ $arrFields = array(
     ),
 
     
+    'responsive'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['resonsive'],
+        'inputType'                => 'select',
+		'options'                  => array('true' => 'True', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'true'"
+    ),
     'maintain_aspect_ratio'             => array(
         'label'                    => &$GLOBALS['TL_LANG']['tl_content']['maintain_aspect_ratio'],
         'inputType'                => 'select',
