@@ -70,3 +70,10 @@ $GLOBALS['TL_LANG']['tl_content']['b_bd_r']          = array('Red', 'Red Value')
 $GLOBALS['TL_LANG']['tl_content']['b_bd_g']          = array('Green', 'Green Value');
 $GLOBALS['TL_LANG']['tl_content']['b_bd_b']          = array('Blue', 'Blue Value');
 $GLOBALS['TL_LANG']['tl_content']['b_bd_a']          = array('Alpha', 'Alpha Value');
+
+
+$GLOBALS['TL_LANG']['tl_content']['responsive']          = array('Responsive', 'Select if this chart should be resonsive or not');
+$GLOBALS['TL_LANG']['tl_content']['responsive']          = array('Maintain Aspect Ratio', 'Select if this chart should try and maintain the initial aspect ratio');
+
+
+
