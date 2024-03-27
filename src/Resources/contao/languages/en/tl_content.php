@@ -13,6 +13,7 @@
 $GLOBALS['TL_LANG']['tl_content']['dataset_legend']        = 'Dataset Details';
 $GLOBALS['TL_LANG']['tl_content']['chart_line_config_legend']   = 'Chart - Line Configuration';
 $GLOBALS['TL_LANG']['tl_content']['chart_bar_config_legend']   = 'Chart - Bar Configuration';
+$GLOBALS['TL_LANG']['tl_content']['chart_options_legend']   = 'Chart - Options';
 
 $GLOBALS['TL_LANG']['tl_content']['label_x']          = array('X-Axis Label', 'Enter the label to show on the x-axis');
 $GLOBALS['TL_LANG']['tl_content']['label_y']          = array('Y-Axis Label', 'Enter the label to show on the y-axis');
@@ -73,7 +74,7 @@ $GLOBALS['TL_LANG']['tl_content']['b_bd_a']          = array('Alpha', 'Alpha Val
 
 
 $GLOBALS['TL_LANG']['tl_content']['responsive']          = array('Responsive', 'Select if this chart should be resonsive or not');
-$GLOBALS['TL_LANG']['tl_content']['responsive']          = array('Maintain Aspect Ratio', 'Select if this chart should try and maintain the initial aspect ratio');
+$GLOBALS['TL_LANG']['tl_content']['maintain_aspect_ratio']          = array('Maintain Aspect Ratio', 'Select if this chart should try and maintain the initial aspect ratio');
 
 
 
