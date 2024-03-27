@@ -63,8 +63,12 @@ class ContentLineChart extends ContentTable
                 if($x != count($rows[0])-1) { $labels .= ', '; }
             }
         
+            $bg_color_array = unserialize($this->line_background_colors);
+            $bd_color_array = unserialize($this->line_border_colors);
+        
             // Assemble our datasets
             $datasets = array();
+            $colors = array();
             foreach($rows as $index=>$row) {
                 
                 $datasets[$index]['label'] = $row[0];
@@ -75,12 +79,25 @@ class ContentLineChart extends ContentTable
                     $datasets[$index]['data'] .= '"' . $row[$x] . '"';
                     if($x != count($row)-1) { $datasets[$index]['data'] .= ', '; }
                     
+                    
                 }
+                
+                $bg_color = "'rgba(";
+                $bg_color .= $bg_color_array[$index-1]['bg_r'] .', '. $bg_color_array[$index-1]['bg_g'] . ', '. $bg_color_array[$index-1]['bg_b'] . ', '. $bg_color_array[$index-1]['bg_a'];
+                $bg_color .= ")'";
+
+                
+                $bd_color = "'rgba(";
+                $bd_color .= $bd_color_array[$index-1]['bd_r'] .', '. $bd_color_array[$index-1]['bd_g'] . ', '. $bd_color_array[$index-1]['bd_b'] . ', '. $bd_color_array[$index-1]['bd_a'];
+                $bd_color .= ")'";
                 
                 $datasets[$index]['dataset'] = "
                 {
                     label: '".$datasets[$index]['label']."',
                     data: [".$datasets[$index]['data']."],
+                    pointBorderColor: [".$bd_color."],
+                    pointBackgroundColor: [".$bg_color."],
+                    pointBorderWidth: ".$this->line_point_border_width.",
                 },
                 ";
                 
