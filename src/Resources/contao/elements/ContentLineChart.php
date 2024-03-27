@@ -48,6 +48,17 @@ class ContentLineChart extends ContentTable
         //print_r(unserialize($this->line_background_colors));
         //echo "</pre>";
         
+        $mw = '';
+        $mh = '';
+        if($this->max_width != '') {
+            $mw = "max-width: " . $this->max_width . ";";
+        }
+        if($this->max_height != '') {
+            $mh = "max-height: " . $this->max_height. ";";
+        }
+        
+        $this->style_max_width = $mw;
+        $this->style_max_height = $mh;
         
         
         
