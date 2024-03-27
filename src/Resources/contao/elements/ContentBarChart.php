@@ -41,6 +41,20 @@ class ContentBarChart extends ContentTable
 	{
 	     // Run the original construct function
         parent::__construct($objElement, $strColumn='main');
+
+
+        // Assemble our css styling strings for the max width and height fields
+        $mw = '';
+        $mh = '';
+        if($this->max_width != '') {
+            $mw = "max-width: " . $this->max_width . ";";
+        }
+        if($this->max_height != '') {
+            $mh = "max-height: " . $this->max_height. ";";
+        }
+        $this->style_max_width = $mw;
+        $this->style_max_height = $mh;
+
         
         // Assemble our table data into usable formats
         $rows = \StringUtil::deserialize($this->tableitems, true);
