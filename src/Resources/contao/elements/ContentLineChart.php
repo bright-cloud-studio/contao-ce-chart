@@ -128,20 +128,6 @@ class ContentLineChart extends ContentTable
                         },
                         options: {';
 
-
-
-
-
-            $config .= '
-                        maintainAspectRatio: ".$this->maintain_aspect_ratio.",
-                        responsive: ".$this->responsive.",
-            ';
-            
-            
-            
-            
-            
-            
             if($this->animate == 'yes') {
 
                 $config .= '
