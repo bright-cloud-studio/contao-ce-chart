@@ -1,4 +1,4 @@
-<div class="ce_bar_chart_wrapper <?= $this->class ?>">
+<div class="ce_bar_chart_wrapper <?= $this->class ?>" style="<?= $this->style_max_width ?> <?= $this->style_max_height ?>">
     
     <?php if ($this->headline): ?>
     	<<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
