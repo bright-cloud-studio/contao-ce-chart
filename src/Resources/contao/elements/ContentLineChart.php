@@ -131,6 +131,8 @@ class ContentLineChart extends ContentTable
             if($this->animate == 'yes') {
 
                 $config .= '
+                        responsive: '.$this->responsive.',
+                        maintainAspectRatio: '.$this->maintain_aspect_ratio.',
                             transitions: {
                               show: {
                                 animations: {
