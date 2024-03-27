@@ -75,6 +75,7 @@ $GLOBALS['TL_LANG']['tl_content']['b_bd_a']          = array('Alpha', 'Alpha Val
 
 $GLOBALS['TL_LANG']['tl_content']['responsive']          = array('Responsive', 'Select if this chart should be resonsive or not');
 $GLOBALS['TL_LANG']['tl_content']['maintain_aspect_ratio']          = array('Maintain Aspect Ratio', 'Select if this chart should try and maintain the initial aspect ratio');
-
+$GLOBALS['TL_LANG']['tl_content']['max_width']          = array('Maximum Width', 'Enter this chart\'s maximum width ("1000px", "20vh", "50%", etc)');
+$GLOBALS['TL_LANG']['tl_content']['max_height']           = array('Maximum Height', 'Enter this chart\'s maximum height ("1000px", "20vh", "50%", etc)');
 
 
