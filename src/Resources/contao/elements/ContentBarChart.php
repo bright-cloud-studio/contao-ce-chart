@@ -11,6 +11,7 @@
 namespace Bcs\ChartBundle;
 
 use Contao\ContentTable;
+use Contao\StringUtil;
 
 class ContentBarChart extends ContentTable
 {
@@ -57,7 +58,7 @@ class ContentBarChart extends ContentTable
 
         
         // Assemble our table data into usable formats
-        $rows = \StringUtil::deserialize($this->tableitems, true);
+        $rows = StringUtil::deserialize($this->tableitems, true);
         
         if($rows != null) {
         
@@ -150,7 +151,7 @@ class ContentBarChart extends ContentTable
             if('yes' == 'yes') {
 
                 // Format background colors as datastring
-                $bg_color_array = unserialize($this->bar_background_colors);
+                $bg_color_array = StringUtil::deserialize($this->bar_background_colors, true);
                 $bg_colors = '';
                 for($x = 0; $x < count($bg_color_array); $x++) {
                     
@@ -160,7 +161,7 @@ class ContentBarChart extends ContentTable
                 }
                 
                 // Format border colors as datastring
-                $bd_color_array = unserialize($this->bar_border_colors);
+                $bd_color_array = StringUtil::deserialize($this->bar_border_colors, true);
                 $bd_colors = '';
                 for($x = 0; $x < count($bd_color_array); $x++) {
                     

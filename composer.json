@@ -5,7 +5,7 @@
     "type": "contao-bundle",
     "homepage": "http://brightcloudstudio.com/",
     "license": "LGPL-3.0+",
-    "version": "0.0.1",
+    "version": "5.7.0",
     "authors":[
         {
             "name": "Bright Cloud Studio",
@@ -19,9 +19,9 @@
         "source": "https://github.com/bright-cloud-studio/contao-ce-chart"
     },
     "require":{
-        "php": "^7.4 || ^8.0",
-        "contao/core-bundle": "^4.13 || ^5.0",
-        "menatwork/contao-multicolumnwizard-bundle": "^3.6.4"
+        "php": "^8.1",
+        "contao/core-bundle": "^5.7",
+        "menatwork/contao-multicolumnwizard-bundle": "^3.7 || ^4.0"
     },
     "extra":{
         "contao-manager-plugin": "Bcs\\ChartBundle\\ContaoManager\\Plugin"

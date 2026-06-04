@@ -11,6 +11,7 @@
 namespace Bcs\ChartBundle;
 
 use Contao\ContentTable;
+use Contao\StringUtil;
 
 class ContentLineChart extends ContentTable
 {
@@ -45,7 +46,7 @@ class ContentLineChart extends ContentTable
         
         
         //echo "<pre>";
-        //print_r(unserialize($this->line_background_colors));
+        //print_r(StringUtil::deserialize($this->line_background_colors, true));
         //echo "</pre>";
         
         $mw = '';
@@ -63,7 +64,7 @@ class ContentLineChart extends ContentTable
         
         
         // Assemble our table data into usable formats
-        $rows = \StringUtil::deserialize($this->tableitems, true);
+        $rows = StringUtil::deserialize($this->tableitems, true);
         
         if($rows != null) {
         
@@ -74,8 +75,8 @@ class ContentLineChart extends ContentTable
                 if($x != count($rows[0])-1) { $labels .= ', '; }
             }
         
-            $bg_color_array = unserialize($this->line_background_colors);
-            $bd_color_array = unserialize($this->line_border_colors);
+            $bg_color_array = StringUtil::deserialize($this->line_background_colors, true);
+            $bd_color_array = StringUtil::deserialize($this->line_border_colors, true);
         
             // Assemble our datasets
             $datasets = array();
@@ -173,7 +174,7 @@ class ContentLineChart extends ContentTable
             if('yes' == 'yes') {
                 
                 // Format background colors as datastring
-                $bg_color_array = unserialize($this->line_background_colors);
+                $bg_color_array = StringUtil::deserialize($this->line_background_colors, true);
                 $bg_colors = '';
                 for($x = 0; $x < count($bg_color_array); $x++) {
                     
@@ -183,7 +184,7 @@ class ContentLineChart extends ContentTable
                 }
                 
                 // Format border colors as datastring
-                $bd_color_array = unserialize($this->line_border_colors);
+                $bd_color_array = StringUtil::deserialize($this->line_border_colors, true);
                 $bd_colors = '';
                 for($x = 0; $x < count($bd_color_array); $x++) {
                     
