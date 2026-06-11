@@ -84,23 +84,25 @@ class ContentLineChart extends ContentTable
             foreach($rows as $index=>$row) {
                 
                 $datasets[$index]['label'] = $row[0];
-                $datasets[$index]['data_string'] = '';
-                
+                $datasets[$index]['data'] = '';
+
                 for($x = 1; $x < count($row); $x++) {
-    
+
                     $datasets[$index]['data'] .= '"' . $row[$x] . '"';
                     if($x != count($row)-1) { $datasets[$index]['data'] .= ', '; }
-                    
-                    
+
+
                 }
-                
+
+                $colorIndex = max(0, $index - 1);
+
                 $bg_color = "'rgba(";
-                $bg_color .= $bg_color_array[$index-1]['bg_r'] .', '. $bg_color_array[$index-1]['bg_g'] . ', '. $bg_color_array[$index-1]['bg_b'] . ', '. $bg_color_array[$index-1]['bg_a'];
+                $bg_color .= ($bg_color_array[$colorIndex]['bg_r'] ?? 0) .', '. ($bg_color_array[$colorIndex]['bg_g'] ?? 0) . ', '. ($bg_color_array[$colorIndex]['bg_b'] ?? 0) . ', '. ($bg_color_array[$colorIndex]['bg_a'] ?? 1);
                 $bg_color .= ")'";
 
-                
+
                 $bd_color = "'rgba(";
-                $bd_color .= $bd_color_array[$index-1]['bd_r'] .', '. $bd_color_array[$index-1]['bd_g'] . ', '. $bd_color_array[$index-1]['bd_b'] . ', '. $bd_color_array[$index-1]['bd_a'];
+                $bd_color .= ($bd_color_array[$colorIndex]['bd_r'] ?? 0) .', '. ($bd_color_array[$colorIndex]['bd_g'] ?? 0) . ', '. ($bd_color_array[$colorIndex]['bd_b'] ?? 0) . ', '. ($bd_color_array[$colorIndex]['bd_a'] ?? 1);
                 $bd_color .= ")'";
                 
                 $datasets[$index]['dataset'] = "
