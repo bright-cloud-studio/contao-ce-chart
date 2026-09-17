@@ -1,0 +1,20 @@
+{# Line chart. The wrapper markup mirrors the legacy ce_chart_line template so
+   that existing site styling keeps matching. #}
+<div class="ce_line_chart_wrapper ce_chart_line{% if element_css_classes %} {{ element_css_classes }}{% endif %}"{% if element_html_id %} id="{{ element_html_id }}"{% endif %}{% if chart_style %} style="{{ chart_style }}"{% endif %}>
+
+    {% if headline.text %}
+        <{{ headline.tag_name }}>{{ headline.text }}</{{ headline.tag_name }}>
+    {% endif %}
+
+    <canvas id="{{ chart_id }}"></canvas>
+
+    {# Configuration travels as inert JSON, so nothing an editor types can execute #}
+    {% if chart_config %}
+        <script type="application/json" data-bcs-chart="{{ chart_id }}">{{ chart_config|raw }}</script>
+    {% endif %}
+
+    <div class="chart_desc_wrapper">
+        <p class="chart_desc">{{ chart_desc|raw }}</p>
+    </div>
+
+</div>

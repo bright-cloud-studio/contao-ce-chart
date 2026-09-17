@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Bcs\ChartBundle\:
+        resource: ../src/
+        exclude:
+            - ../src/BcsChartBundle.php
+            - ../src/ContaoManager/
