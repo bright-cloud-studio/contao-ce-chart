@@ -15,8 +15,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class BcsChartBundle extends Bundle
 {
     /**
-     * Point the bundle at the package root so Contao finds contao/ and config/
-     * next to src/ rather than inside it
+     * Point the bundle at the package root so contao/ and public/ are found
+     * next to src/ rather than inside it. config/services.yaml is loaded by
+     * DependencyInjection\BcsChartExtension instead.
      */
     public function getPath(): string
     {
