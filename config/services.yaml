@@ -8,3 +8,4 @@ services:
         exclude:
             - ../src/BcsChartBundle.php
             - ../src/ContaoManager/
+            - ../src/DependencyInjection/
