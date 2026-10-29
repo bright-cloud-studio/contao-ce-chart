@@ -21,14 +21,28 @@ class BarChartController extends AbstractChartController
      *
      * Every bar shares one styling block, so the colour wizards feed the
      * elements option directly rather than being split across the datasets.
+     * A gradient can't be expressed as JSON, so its two colours are handed to
+     * the bcsGradient plugin in chart-init.js, which paints each bar.
      */
     protected function getConfig(ContentModel $model, array $rows): array
     {
         $options = $this->getOptions($model, $rows);
+        $backgrounds = $this->getColors($model->bar_background_colors, 'b_bg');
+
+        if ($model->bar_horizontal) {
+            $options['indexAxis'] = 'y';
+        }
+
+        if ($model->bar_gradient) {
+            $options['plugins']['bcsGradient'] = [
+                'from' => $backgrounds[0] ?? null,
+                'to' => $backgrounds[1] ?? $backgrounds[0] ?? null,
+            ];
+        }
 
         $options['elements'] = [
             'bar' => [
-                'backgroundColor' => $this->getColors($model->bar_background_colors, 'b_bg'),
+                'backgroundColor' => $backgrounds,
                 'borderWidth' => (float) $model->bar_border_width,
                 'borderColor' => $this->getColors($model->bar_border_colors, 'b_bd'),
                 'borderRadius' => (float) $model->bar_border_radius,
