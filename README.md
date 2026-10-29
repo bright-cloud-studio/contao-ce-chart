@@ -52,6 +52,85 @@ The colour fields take **RGBA components as separate values** — one row per
 series, in the same order as the rows of the data grid. Alpha is `0`–`1`, so
 `255 / 0 / 0 / 0.5` is a half-transparent red.
 
+The line border colours have a fourth column, **Style**, that draws a series
+as a solid, dashed or dotted line. A row of constant values with a dotted style
+makes a reference line, e.g. a target of `0.5` in every column.
+
+### Display
+
+Every display setting defaults to drawing everything, so charts saved before
+these fields existed are unchanged.
+
+- **Hide Chart Parts** turns off the legend, the title and/or the grid lines.
+- **X/Y-Axis Display** is *Full* (line and values), *Line only* (the axis line
+  and its label, without values) or *Hidden*.
+- **Value Minimum/Maximum** pin the value axis. Leave them blank to fit the
+  data. Set the minimum to `0` so the smallest bar still shows, and give a set
+  of related charts the same maximum so they can be compared.
+- **Value Step** sets the gap between the values on the value axis, e.g. `0.5`
+  for 0, 0.5, 1.0 … Leave it blank to let Chart.js choose.
+
+### Bar options
+
+- **Horizontal Bars** runs the bars sideways. The x-axis then carries the
+  values, so *X-Axis Display* and *Value Minimum/Maximum* refer to it.
+- **Gradient Bars** fades each bar from the first background colour to the
+  second, from its base to its tip.
+- **Two-Line Labels** shows each bar label in capitals, broken before its last
+  word, with that last word in bold — "Surround Precision" becomes SURROUND over
+  **PRECISION**. A one-word label is a single bold line.
+
+### Fonts and colours
+
+Chart.js draws on a canvas, which CSS can't style. Instead, `chart-init.js`
+reads these custom properties from the chart's canvas, so they can be set on any
+wrapper in the site stylesheet. Each one is optional, and an unset property
+leaves the Chart.js default in place.
+
+| Property | Applies to |
+|---|---|
+| `--chart-font-family` | every label, value and title |
+| `--chart-font-size` | every label, value and title (a number, in pixels) |
+| `--chart-color` | every label, value and title, plus the axis lines |
+| `--chart-title-weight` | axis titles and the chart title |
+
+```scss
+.level_card {
+    --chart-font-family: "Gotham", sans-serif;
+    --chart-font-size: 12;
+    --chart-color: #151744;
+    --chart-title-weight: 700;
+}
+```
+
+The properties are read again every time a chart updates, so a chart moved
+somewhere they differ (a popup, say) restyles itself on its next redraw.
+
+Two more properties change what is drawn, in the same opt-in way:
+
+| Property | Effect |
+|---|---|
+| `--chart-axis-values: show` | axes set to *Line only* show their values too |
+| `--chart-area-background` | colour filled behind the plotting area |
+
+So a chart can stay minimal in a small card and gain its values and a shaded
+background inside a larger popup, from CSS alone.
+
+`chart-init.js` also sets `--chart-area-left` on each chart's wrapper: the
+distance, in pixels, from the canvas content edge to where the plotting area
+starts (the y-axis line). Site CSS can use it to decorate around the axis, such
+as shading the label column:
+
+```scss
+.popup .ce_bar_chart_wrapper {
+    padding: 30px 30px 30px 40px;
+    background: linear-gradient(#d2d3d6, #d2d3d6) no-repeat 0 30px / calc(40px + var(--chart-area-left)) calc(100% - 60px);
+}
+```
+
+Put padding and borders on the wrapper, not the canvas. Chart.js sizes the
+chart to the canvas's outer box, so padding on the canvas squeezes the drawing.
+
 ### Sizing
 
 **Responsive** and **Maintain Aspect Ratio** map to the Chart.js options of the
