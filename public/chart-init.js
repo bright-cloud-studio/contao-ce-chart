@@ -78,6 +78,54 @@
         }
     };
 
+    /**
+     * Keep a chart in step with the CSS around it
+     *
+     * The custom properties are read again before every update, so a chart
+     * restyles itself when it moves somewhere they differ (e.g. into a popup)
+     * and redraws. After layout, where the plotting area starts is published
+     * as --chart-area-left on the wrapper, so site CSS can decorate around the
+     * axis (e.g. shade the labels).
+     */
+    var stylesPlugin = {
+        id: 'bcsStyles',
+        beforeUpdate: function (chart) {
+            applyStyles(chart.canvas, chart.config.options);
+            hideSplitLabels(chart.config.options);
+        },
+        afterLayout: function (chart) {
+            chart.canvas.parentNode.style.setProperty('--chart-area-left', chart.chartArea.left + 'px');
+        }
+    };
+
+    /**
+     * Hand the label colour and weight to the split labels plugin, then hide
+     * Chart.js's own labels while keeping them in bold so they reserve enough
+     * room. The weight and a colour no variable supplied are kept from the
+     * first pass, before the labels were hidden.
+     */
+    function hideSplitLabels(options) {
+        var split = options.plugins && options.plugins.bcsSplitLabels;
+
+        if (!split) {
+            return;
+        }
+
+        var ticks = options.scales[split.axis].ticks;
+        var font = ticks.font || {};
+
+        if ('transparent' !== ticks.color) {
+            split.color = ticks.color || Chart.defaults.color;
+        }
+
+        if (!split.weight) {
+            split.weight = font.weight || 'normal';
+        }
+
+        ticks.color = 'transparent';
+        ticks.font = Object.assign({}, font, {weight: 'bold'});
+    }
+
     // Merge a font and colour into one text option of the configuration
     function applyText(target, font, color) {
         if (!target) {
@@ -104,7 +152,7 @@
      *   --chart-color          every label, tick and title, and the axis lines
      *   --chart-title-weight   axis titles and the chart title
      */
-    function applyStyles(canvas, config) {
+    function applyStyles(canvas, options) {
         var style = getComputedStyle(canvas);
         var family = style.getPropertyValue('--chart-font-family').trim();
         var size = parseFloat(style.getPropertyValue('--chart-font-size'));
@@ -130,8 +178,6 @@
 
         font = Object.keys(font).length ? font : null;
         titleFont = Object.keys(titleFont).length ? titleFont : null;
-
-        var options = config.options;
 
         // Axis lines, values and titles
         Object.keys(options.scales || {}).forEach(function (id) {
@@ -166,28 +212,16 @@
 
             if (canvas) {
                 var config = JSON.parse(configs[i].textContent);
-
-                applyStyles(canvas, config);
-
                 var plugins = config.options.plugins || {};
 
-                config.plugins = [];
+                config.plugins = [stylesPlugin];
 
                 // Only gradient bar charts carry the plugin's options
                 if (plugins.bcsGradient) {
                     config.plugins.push(gradientPlugin);
                 }
 
-                // Hand the label colour and weight to the plugin, then hide Chart.js's
-                // own labels while keeping them in bold so they reserve enough room
                 if (plugins.bcsSplitLabels) {
-                    var ticks = config.options.scales[plugins.bcsSplitLabels.axis].ticks;
-                    var font = ticks.font || {};
-
-                    plugins.bcsSplitLabels.color = ticks.color || Chart.defaults.color;
-                    plugins.bcsSplitLabels.weight = font.weight || 'normal';
-                    ticks.color = 'transparent';
-                    ticks.font = Object.assign({}, font, {weight: 'bold'});
                     config.plugins.push(splitLabelsPlugin);
                 }
 
