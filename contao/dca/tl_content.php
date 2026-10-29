@@ -12,8 +12,8 @@
 $dc = &$GLOBALS['TL_DCA']['tl_content'];
 
 // Palettes
-$dc['palettes']['chart_line'] = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_line_config_legend},animate,line_tension,line_border_width,line_border_dash,line_border_joint_style,line_fill;{line_border_colors_legend},line_border_colors;{line_background_colors_legend},line_background_colors;{line_point_legend},line_point_background_color,line_point_border_color,line_point_border_width,line_point_style,line_point_radius;{chart_display_legend},chart_hide,axis_x,axis_y,value_min,value_max;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},cssID;{invisible_legend:hide},invisible,start,stop';
-$dc['palettes']['chart_bar']  = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_bar_config_legend},bar_horizontal,bar_gradient,bar_split_labels,bar_border_width,bar_border_skipped,bar_border_radius,bar_inflate_amount,bar_point_style;{bar_background_colors_legend},bar_background_colors;{bar_border_colors_legend},bar_border_colors;{chart_display_legend},chart_hide,axis_x,axis_y,value_min,value_max;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},cssID;{invisible_legend:hide},invisible,start,stop';
+$dc['palettes']['chart_line'] = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_line_config_legend},animate,line_tension,line_border_width,line_border_dash,line_border_joint_style,line_fill;{line_border_colors_legend},line_border_colors;{line_background_colors_legend},line_background_colors;{line_point_legend},line_point_background_color,line_point_border_color,line_point_border_width,line_point_style,line_point_radius;{chart_display_legend},chart_hide,axis_x,axis_y,value_min,value_max,value_step;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},cssID;{invisible_legend:hide},invisible,start,stop';
+$dc['palettes']['chart_bar']  = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_bar_config_legend},bar_horizontal,bar_gradient,bar_split_labels,bar_border_width,bar_border_skipped,bar_border_radius,bar_inflate_amount,bar_point_style;{bar_background_colors_legend},bar_background_colors;{bar_border_colors_legend},bar_border_colors;{chart_display_legend},chart_hide,axis_x,axis_y,value_min,value_max,value_step;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},cssID;{invisible_legend:hide},invisible,start,stop';
 
 // Fields
 $dc['fields'] = array_merge($dc['fields'], array
@@ -397,6 +397,14 @@ $dc['fields'] = array_merge($dc['fields'], array
     'value_max' => array
     (
         'label'                   => &$GLOBALS['TL_LANG']['tl_content']['value_max'],
+        'exclude'                 => true,
+        'inputType'               => 'text',
+        'eval'                    => array('rgxp'=>'digit', 'maxlength'=>16, 'tl_class'=>'w50'),
+        'sql'                     => "varchar(16) NOT NULL default ''"
+    ),
+    'value_step' => array
+    (
+        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['value_step'],
         'exclude'                 => true,
         'inputType'               => 'text',
         'eval'                    => array('rgxp'=>'digit', 'maxlength'=>16, 'tl_class'=>'w50'),
