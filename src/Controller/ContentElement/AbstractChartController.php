@@ -175,12 +175,18 @@ abstract class AbstractChartController extends AbstractContentElementController
      *
      * "line" keeps the axis line and title but drops the tick values; "hidden"
      * removes the axis altogether.
+     *
+     * Contao saves text fields with special characters encoded, so "(Hz)"
+     * arrives as "&#40;Hz&#41;". Canvas text would print that literally, so
+     * decode it first.
      */
     private function getAxis($label, string $display, bool $hideGrid): array
     {
+        $label = StringUtil::decodeEntities((string) $label);
+
         $axis = [
             'beginAtZero' => false,
-            'title' => ['display' => '' !== (string) $label, 'text' => (string) $label],
+            'title' => ['display' => '' !== $label, 'text' => $label],
         ];
 
         if ('hidden' === $display) {
