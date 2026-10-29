@@ -231,4 +231,13 @@ abstract class AbstractChartController extends AbstractContentElementController
      *
      * The UMD build is deliberate — it exposes Chart as a global, which
      * hand-written chart scripts elsewhere on the page may also rely on. Neither
-     * file carries a combiner flag, so both keep their order in the <he
+     * file carries a combiner flag, so both keep their order in the <head> and
+     * Chart.js is always defined first. The named keys collapse the duplicates
+     * when several charts share a page.
+     */
+    private function registerAssets(): void
+    {
+        $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js';
+        $GLOBALS['TL_JAVASCRIPT']['chart_init'] = 'bundles/bcschart/chart-init.js';
+    }
+}
