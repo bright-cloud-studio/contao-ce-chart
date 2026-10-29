@@ -124,7 +124,7 @@ abstract class AbstractChartController extends AbstractContentElementController
      *  1. Apply the responsive and aspect ratio settings unconditionally
      *  2. Add the show/hide transitions only when animation is switched on
      *  3. Build each axis from its label, display mode and the grid setting
-     *  4. Pin the value axis to the editor's minimum and maximum, if any
+     *  4. Pin the value axis to the editor's minimum, maximum and step, if any
      *  5. Take the chart title from the top-left cell of the grid
      *
      * Every display setting defaults to drawing everything, so charts saved
@@ -160,6 +160,10 @@ abstract class AbstractChartController extends AbstractContentElementController
 
         if ('' !== (string) $model->value_max) {
             $options['scales'][$valueAxis]['max'] = (float) $model->value_max;
+        }
+
+        if ('' !== (string) $model->value_step) {
+            $options['scales'][$valueAxis]['ticks']['stepSize'] = (float) $model->value_step;
         }
 
         $options['plugins'] = [
@@ -227,13 +231,4 @@ abstract class AbstractChartController extends AbstractContentElementController
      *
      * The UMD build is deliberate — it exposes Chart as a global, which
      * hand-written chart scripts elsewhere on the page may also rely on. Neither
-     * file carries a combiner flag, so both keep their order in the <head> and
-     * Chart.js is always defined first. The named keys collapse the duplicates
-     * when several charts share a page.
-     */
-    private function registerAssets(): void
-    {
-        $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js';
-        $GLOBALS['TL_JAVASCRIPT']['chart_init'] = 'bundles/bcschart/chart-init.js';
-    }
-}
+     * file carries a combiner flag, so both keep their order in the <he
