@@ -17,6 +17,7 @@ $GLOBALS['TL_LANG']['tl_content']['line_background_colors_legend']  = 'Chart - L
 $GLOBALS['TL_LANG']['tl_content']['line_point_legend']              = 'Chart - Point Settings';
 $GLOBALS['TL_LANG']['tl_content']['bar_background_colors_legend']   = 'Chart - Bar Background Colors';
 $GLOBALS['TL_LANG']['tl_content']['bar_border_colors_legend']       = 'Chart - Bar Border Colors';
+$GLOBALS['TL_LANG']['tl_content']['chart_display_legend']           = 'Chart - Display';
 $GLOBALS['TL_LANG']['tl_content']['chart_options_legend']           = 'Chart - Options';
 
 /* Dataset fields */
@@ -33,6 +34,8 @@ $GLOBALS['TL_LANG']['tl_content']['line_border_joint_style']        = array('Lin
 $GLOBALS['TL_LANG']['tl_content']['line_fill']                      = array('Line Fill', 'Choose if the lines should fill the background to the bottom of the chart');
 
 /* Bar fields */
+$GLOBALS['TL_LANG']['tl_content']['bar_horizontal']                 = array('Horizontal Bars', 'Run the bars sideways from the left axis instead of up from the bottom');
+$GLOBALS['TL_LANG']['tl_content']['bar_gradient']                   = array('Gradient Bars', 'Fade each bar from the first background color to the second along its length');
 $GLOBALS['TL_LANG']['tl_content']['bar_border_width']               = array('Bar Stroke Width', 'The thickness of the bar stroke');
 $GLOBALS['TL_LANG']['tl_content']['bar_border_skipped']             = array('Bar Stroke Skipped', 'Choose which edge of the bar leaves its stroke off');
 $GLOBALS['TL_LANG']['tl_content']['bar_border_radius']              = array('Bar Stroke Radius', 'Enter the bar radius');
@@ -58,6 +61,8 @@ $GLOBALS['TL_LANG']['tl_content']['bd_r']                           = array('Red
 $GLOBALS['TL_LANG']['tl_content']['bd_g']                           = array('Green', 'Green Value');
 $GLOBALS['TL_LANG']['tl_content']['bd_b']                           = array('Blue', 'Blue Value');
 $GLOBALS['TL_LANG']['tl_content']['bd_a']                           = array('Alpha', 'Alpha Value');
+$GLOBALS['TL_LANG']['tl_content']['bd_style']                       = array('Style', 'Line style for this series');
+$GLOBALS['TL_LANG']['tl_content']['bd_style_options']               = array('solid'=>'Solid', 'dashed'=>'Dashed', 'dotted'=>'Dotted');
 
 /* Bar colors */
 $GLOBALS['TL_LANG']['tl_content']['bar_background_colors']          = array('Bar Background Colors', 'Enter the RGBA values for the individual bar background colors');
@@ -71,6 +76,15 @@ $GLOBALS['TL_LANG']['tl_content']['b_bd_r']                         = array('Red
 $GLOBALS['TL_LANG']['tl_content']['b_bd_g']                         = array('Green', 'Green Value');
 $GLOBALS['TL_LANG']['tl_content']['b_bd_b']                         = array('Blue', 'Blue Value');
 $GLOBALS['TL_LANG']['tl_content']['b_bd_a']                         = array('Alpha', 'Alpha Value');
+
+/* Chart display */
+$GLOBALS['TL_LANG']['tl_content']['chart_hide']                     = array('Hide Chart Parts', 'Choose which parts of the chart should not be drawn');
+$GLOBALS['TL_LANG']['tl_content']['chart_hide_options']             = array('legend'=>'Legend', 'title'=>'Title', 'grid'=>'Grid lines');
+$GLOBALS['TL_LANG']['tl_content']['axis_x']                         = array('X-Axis Display', 'Choose how much of the horizontal axis to draw');
+$GLOBALS['TL_LANG']['tl_content']['axis_y']                         = array('Y-Axis Display', 'Choose how much of the vertical axis to draw');
+$GLOBALS['TL_LANG']['tl_content']['axis_options']                   = array('full'=>'Full (line and values)', 'line'=>'Line only (no values)', 'hidden'=>'Hidden');
+$GLOBALS['TL_LANG']['tl_content']['value_min']                      = array('Value Minimum', 'Lowest value on the value axis. Leave blank to fit the data');
+$GLOBALS['TL_LANG']['tl_content']['value_max']                      = array('Value Maximum', 'Highest value on the value axis. Leave blank to fit the data');
 
 /* Chart options */
 $GLOBALS['TL_LANG']['tl_content']['responsive']                     = array('Responsive', 'Select if this chart should be responsive or not');
