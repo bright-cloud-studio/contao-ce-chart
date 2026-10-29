@@ -86,6 +86,7 @@ $GLOBALS['TL_LANG']['tl_content']['axis_y']                         = array('Y-A
 $GLOBALS['TL_LANG']['tl_content']['axis_options']                   = array('full'=>'Full (line and values)', 'line'=>'Line only (no values)', 'hidden'=>'Hidden');
 $GLOBALS['TL_LANG']['tl_content']['value_min']                      = array('Value Minimum', 'Lowest value on the value axis. Leave blank to fit the data');
 $GLOBALS['TL_LANG']['tl_content']['value_max']                      = array('Value Maximum', 'Highest value on the value axis. Leave blank to fit the data');
+$GLOBALS['TL_LANG']['tl_content']['value_step']                     = array('Value Step', 'Gap between the values shown on the value axis, e.g. 0.5. Leave blank to let the chart choose');
 
 /* Chart options */
 $GLOBALS['TL_LANG']['tl_content']['responsive']                     = array('Responsive', 'Select if this chart should be responsive or not');
