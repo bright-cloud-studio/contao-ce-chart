@@ -86,15 +86,49 @@
      * and redraws. After layout, where the plotting area starts is published
      * as --chart-area-left on the wrapper, so site CSS can decorate around the
      * axis (e.g. shade the labels).
+     *
+     * Two more properties change what is drawn rather than how text looks:
+     *
+     *   --chart-axis-values: show   values on axes set to "Line only" appear
+     *   --chart-area-background     colour filled behind the plotting area
      */
     var stylesPlugin = {
         id: 'bcsStyles',
+
+        // Note the axes saved as "Line only" before anything changes them
+        beforeInit: function (chart) {
+            var scales = chart.config.options.scales || {};
+
+            chart.$bcsLineAxes = Object.keys(scales).filter(function (id) {
+                return false !== scales[id].display && scales[id].ticks && false === scales[id].ticks.display;
+            });
+        },
         beforeUpdate: function (chart) {
-            applyStyles(chart.canvas, chart.config.options);
-            hideSplitLabels(chart.config.options);
+            var options = chart.config.options;
+            var style = getComputedStyle(chart.canvas);
+            var showValues = 'show' === style.getPropertyValue('--chart-axis-values').trim();
+
+            applyStyles(chart.canvas, options);
+            hideSplitLabels(options);
+
+            chart.$bcsLineAxes.forEach(function (id) {
+                options.scales[id].ticks.display = showValues;
+            });
+
+            chart.$bcsAreaBackground = style.getPropertyValue('--chart-area-background').trim();
         },
         afterLayout: function (chart) {
             chart.canvas.parentNode.style.setProperty('--chart-area-left', chart.chartArea.left + 'px');
+        },
+        beforeDraw: function (chart) {
+            var area = chart.chartArea;
+
+            if (chart.$bcsAreaBackground) {
+                chart.ctx.save();
+                chart.ctx.fillStyle = chart.$bcsAreaBackground;
+                chart.ctx.fillRect(area.left, area.top, area.width, area.height);
+                chart.ctx.restore();
+            }
         }
     };
 
