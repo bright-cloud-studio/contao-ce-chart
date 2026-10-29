@@ -12,6 +12,7 @@ namespace Bcs\ChartBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\StringUtil;
 
 #[AsContentElement(type: 'chart_bar', category: 'datasets', template: 'content_element/chart_bar')]
 class BarChartController extends AbstractChartController
@@ -40,6 +41,24 @@ class BarChartController extends AbstractChartController
             ];
         }
 
+        $labels = $this->getLabels($rows);
+
+        // Two-line labels: capitals, broken before the last word, which the
+        // bcsSplitLabels plugin in chart-init.js draws in bold
+        if ($model->bar_split_labels) {
+            $labels = array_map(
+                static function ($label): array {
+                    $label = mb_strtoupper(StringUtil::decodeEntities((string) $label));
+                    $break = strrpos($label, ' ');
+
+                    return false === $break ? [$label] : [substr($label, 0, $break), substr($label, $break + 1)];
+                },
+                $labels
+            );
+
+            $options['plugins']['bcsSplitLabels'] = ['axis' => $model->bar_horizontal ? 'y' : 'x'];
+        }
+
         $options['elements'] = [
             'bar' => [
                 'backgroundColor' => $backgrounds,
@@ -54,7 +73,7 @@ class BarChartController extends AbstractChartController
 
         return [
             'type' => 'bar',
-            'data' => ['labels' => $this->getLabels($rows), 'datasets' => $this->getSeries($rows)],
+            'data' => ['labels' => $labels, 'datasets' => $this->getSeries($rows)],
             'options' => $options,
         ];
     }
