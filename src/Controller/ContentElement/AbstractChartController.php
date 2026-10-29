@@ -123,11 +123,17 @@ abstract class AbstractChartController extends AbstractContentElementController
      * Flow:
      *  1. Apply the responsive and aspect ratio settings unconditionally
      *  2. Add the show/hide transitions only when animation is switched on
-     *  3. Title each axis only where the editor supplied a label
-     *  4. Take the chart title from the top-left cell of the grid
+     *  3. Build each axis from its label, display mode and the grid setting
+     *  4. Pin the value axis to the editor's minimum and maximum, if any
+     *  5. Take the chart title from the top-left cell of the grid
+     *
+     * Every display setting defaults to drawing everything, so charts saved
+     * before those fields existed render exactly as they did.
      */
     protected function getOptions(ContentModel $model, array $rows): array
     {
+        $hide = StringUtil::deserialize($model->chart_hide, true);
+
         $options = [
             'responsive' => 'true' === $model->responsive,
             'maintainAspectRatio' => 'true' === $model->maintain_aspect_ratio,
@@ -141,13 +147,24 @@ abstract class AbstractChartController extends AbstractContentElementController
         }
 
         $options['scales'] = [
-            'y' => $this->getAxis($model->label_y),
-            'x' => $this->getAxis($model->label_x),
+            'y' => $this->getAxis($model->label_y, (string) $model->axis_y, \in_array('grid', $hide, true)),
+            'x' => $this->getAxis($model->label_x, (string) $model->axis_x, \in_array('grid', $hide, true)),
         ];
 
+        // Horizontal bars carry their values along the x-axis instead
+        $valueAxis = $model->bar_horizontal ? 'x' : 'y';
+
+        if ('' !== (string) $model->value_min) {
+            $options['scales'][$valueAxis]['min'] = (float) $model->value_min;
+        }
+
+        if ('' !== (string) $model->value_max) {
+            $options['scales'][$valueAxis]['max'] = (float) $model->value_max;
+        }
+
         $options['plugins'] = [
-            'legend' => ['position' => 'top'],
-            'title' => ['display' => true, 'text' => $rows[0][0]],
+            'legend' => ['display' => !\in_array('legend', $hide, true), 'position' => 'top'],
+            'title' => ['display' => !\in_array('title', $hide, true), 'text' => $rows[0][0]],
         ];
 
         return $options;
@@ -155,13 +172,30 @@ abstract class AbstractChartController extends AbstractContentElementController
 
     /**
      * Describe a single axis, showing its title only when one was entered
+     *
+     * "line" keeps the axis line and title but drops the tick values; "hidden"
+     * removes the axis altogether.
      */
-    private function getAxis($label): array
+    private function getAxis($label, string $display, bool $hideGrid): array
     {
-        return [
+        $axis = [
             'beginAtZero' => false,
             'title' => ['display' => '' !== (string) $label, 'text' => (string) $label],
         ];
+
+        if ('hidden' === $display) {
+            $axis['display'] = false;
+        }
+
+        if ('line' === $display) {
+            $axis['ticks'] = ['display' => false];
+        }
+
+        if ($hideGrid) {
+            $axis['grid'] = ['display' => false];
+        }
+
+        return $axis;
     }
 
     /**
