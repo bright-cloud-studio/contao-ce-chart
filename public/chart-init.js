@@ -28,6 +28,56 @@
         }
     };
 
+    /**
+     * Draw two-line category labels with the last line in bold
+     *
+     * A tick label only takes one font, so Chart.js still lays the labels out
+     * (in bold, to reserve the wider of the two widths) but paints them
+     * transparent, and this plugin draws the visible text over the same spots.
+     */
+    var splitLabelsPlugin = {
+        id: 'bcsSplitLabels',
+        afterDraw: function (chart, args, options) {
+            var scale = chart.scales[options.axis];
+            var ticks = scale.options.ticks;
+            var grid = scale.options.grid;
+            var regular = Chart.helpers.toFont(Object.assign({}, ticks.font, {weight: options.weight}));
+            var bold = Chart.helpers.toFont(Object.assign({}, ticks.font, {weight: 'bold'}));
+            var offset = ticks.padding + (grid.drawTicks ? grid.tickLength : 0);
+            var vertical = 'y' === options.axis;
+            var ctx = chart.ctx;
+
+            ctx.save();
+            ctx.fillStyle = options.color;
+            ctx.textAlign = vertical ? 'right' : 'center';
+            ctx.textBaseline = 'middle';
+
+            scale.ticks.forEach(function (tick, index) {
+                var lines = [].concat(chart.data.labels[tick.value]);
+                var position = scale.getPixelForTick(index);
+
+                // Centre the block on the tick beside a vertical axis, hang it below a horizontal one
+                var first = vertical
+                    ? position - (lines.length - 1) * regular.lineHeight / 2
+                    : scale.top + offset + regular.lineHeight / 2;
+
+                lines.forEach(function (line, i) {
+                    var at = first + i * regular.lineHeight;
+
+                    ctx.font = i === lines.length - 1 ? bold.string : regular.string;
+
+                    if (vertical) {
+                        ctx.fillText(line, scale.right - offset, at);
+                    } else {
+                        ctx.fillText(line, position, at);
+                    }
+                });
+            });
+
+            ctx.restore();
+        }
+    };
+
     // Merge a font and colour into one text option of the configuration
     function applyText(target, font, color) {
         if (!target) {
@@ -119,9 +169,26 @@
 
                 applyStyles(canvas, config);
 
+                var plugins = config.options.plugins || {};
+
+                config.plugins = [];
+
                 // Only gradient bar charts carry the plugin's options
-                if (config.options.plugins && config.options.plugins.bcsGradient) {
-                    config.plugins = [gradientPlugin];
+                if (plugins.bcsGradient) {
+                    config.plugins.push(gradientPlugin);
+                }
+
+                // Hand the label colour and weight to the plugin, then hide Chart.js's
+                // own labels while keeping them in bold so they reserve enough room
+                if (plugins.bcsSplitLabels) {
+                    var ticks = config.options.scales[plugins.bcsSplitLabels.axis].ticks;
+                    var font = ticks.font || {};
+
+                    plugins.bcsSplitLabels.color = ticks.color || Chart.defaults.color;
+                    plugins.bcsSplitLabels.weight = font.weight || 'normal';
+                    ticks.color = 'transparent';
+                    ticks.font = Object.assign({}, font, {weight: 'bold'});
+                    config.plugins.push(splitLabelsPlugin);
                 }
 
                 new Chart(canvas, config);
