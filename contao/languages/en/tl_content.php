@@ -36,6 +36,7 @@ $GLOBALS['TL_LANG']['tl_content']['line_fill']                      = array('Lin
 /* Bar fields */
 $GLOBALS['TL_LANG']['tl_content']['bar_horizontal']                 = array('Horizontal Bars', 'Run the bars sideways from the left axis instead of up from the bottom');
 $GLOBALS['TL_LANG']['tl_content']['bar_gradient']                   = array('Gradient Bars', 'Fade each bar from the first background color to the second along its length');
+$GLOBALS['TL_LANG']['tl_content']['bar_split_labels']               = array('Two-Line Labels', 'Show each bar label in capitals over two lines, with the last word in bold');
 $GLOBALS['TL_LANG']['tl_content']['bar_border_width']               = array('Bar Stroke Width', 'The thickness of the bar stroke');
 $GLOBALS['TL_LANG']['tl_content']['bar_border_skipped']             = array('Bar Stroke Skipped', 'Choose which edge of the bar leaves its stroke off');
 $GLOBALS['TL_LANG']['tl_content']['bar_border_radius']              = array('Bar Stroke Radius', 'Enter the bar radius');
