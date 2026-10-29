@@ -12,6 +12,7 @@ namespace Bcs\ChartBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\StringUtil;
 
 #[AsContentElement(type: 'chart_line', category: 'datasets', template: 'content_element/chart_line')]
 class LineChartController extends AbstractChartController
@@ -21,24 +22,39 @@ class LineChartController extends AbstractChartController
      *
      * Flow:
      *  1. Read the per-series colours from the two colour wizards
-     *  2. Give each dataset the colour sitting at its own position
+     *  2. Give each dataset the colour and line style sitting at its own position
      *  3. Apply the shared line and point styling through the elements option
      */
     protected function getConfig(ContentModel $model, array $rows): array
     {
         $backgrounds = $this->getColors($model->line_background_colors, 'bg');
         $borders = $this->getColors($model->line_border_colors, 'bd');
+        $borderRows = StringUtil::deserialize($model->line_border_colors, true);
 
         $datasets = [];
 
         foreach ($this->getSeries($rows) as $index => $series) {
-            $datasets[] = [
+            $dataset = [
                 'label' => $series['label'],
                 'data' => $series['data'],
                 'pointBackgroundColor' => [$backgrounds[$index] ?? null],
                 'pointBorderColor' => [$borders[$index] ?? null],
                 'pointBorderWidth' => (float) $model->line_point_border_width,
             ];
+
+            // A styled series overrides the shared dash; dots are zero-length dashes with round caps
+            $style = $borderRows[$index]['bd_style'] ?? 'solid';
+
+            if ('dashed' === $style) {
+                $dataset['borderDash'] = [8, 6];
+            }
+
+            if ('dotted' === $style) {
+                $dataset['borderDash'] = [0, 8];
+                $dataset['borderCapStyle'] = 'round';
+            }
+
+            $datasets[] = $dataset;
         }
 
         $options = $this->getOptions($model, $rows);
