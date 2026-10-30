@@ -42,7 +42,16 @@ class LineChartController extends AbstractChartController
                 'pointBorderWidth' => (float) $model->line_point_border_width,
             ];
 
-            // A styled series overrides the shared dash; dots are zero-length dashes with round caps
+            // A series can set its own width, which also sizes its dots
+            $width = (float) $model->line_border_width;
+
+            if ('' !== (string) ($borderRows[$index]['bd_width'] ?? '')) {
+                $width = (float) $borderRows[$index]['bd_width'];
+                $dataset['borderWidth'] = $width;
+            }
+
+            // A styled series overrides the shared dash; dots are zero-length dashes with
+            // round caps, spaced in proportion to their size
             $style = $borderRows[$index]['bd_style'] ?? 'solid';
 
             if ('dashed' === $style) {
@@ -50,7 +59,7 @@ class LineChartController extends AbstractChartController
             }
 
             if ('dotted' === $style) {
-                $dataset['borderDash'] = [0, 8];
+                $dataset['borderDash'] = [0, max(8, $width * 2.5)];
                 $dataset['borderCapStyle'] = 'round';
             }
 
