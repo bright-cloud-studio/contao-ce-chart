@@ -280,6 +280,13 @@ $dc['fields'] = array_merge($dc['fields'], array
                 'inputType'       => 'select',
                 'options'         => array('solid', 'dashed', 'dotted'),
                 'reference'       => &$GLOBALS['TL_LANG']['tl_content']['bd_style_options']
+            ),
+            'bd_width' => array
+            (
+                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bd_width'],
+                'exclude'         => true,
+                'inputType'       => 'text',
+                'eval'            => array('rgxp'=>'digit', 'style'=>'width:60px')
             )
         )),
         'sql'                     => "blob NULL"
