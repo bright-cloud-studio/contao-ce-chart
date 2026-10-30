@@ -54,7 +54,9 @@ series, in the same order as the rows of the data grid. Alpha is `0`–`1`, so
 
 The line border colours have a fourth column, **Style**, that draws a series
 as a solid, dashed or dotted line. A row of constant values with a dotted style
-makes a reference line, e.g. a target of `0.5` in every column.
+makes a reference line, e.g. a target of `0.5` in every column. An optional
+fifth column, **Width**, gives that series its own stroke width (blank uses
+Line Stroke Width); dots grow and space out with it.
 
 ### Display
 
@@ -80,6 +82,25 @@ these fields existed are unchanged.
   word, with that last word in bold — "Surround Precision" becomes SURROUND over
   **PRECISION**. A one-word label is a single bold line.
 
+### Line callouts
+
+**Callouts** on a line chart add boxed notes with a white leader line to a point,
+one row each:
+
+| Column | Meaning |
+|---|---|
+| Text | the note in the box |
+| X | the x-axis label the line points to, exactly as in the table header |
+| Value | the value the line points to |
+| Bracket To | optional — the line ends in a bracket spanning Value to this |
+| Box Height | the value the box sits level with |
+
+The box goes on the side facing the chart's centre, and the leader stays a
+little inside the plotting area so it never sits on an axis. Callouts are only
+drawn where the site sets `--chart-callouts: show`, and they are skipped
+altogether when the chart is too narrow for the boxes to clear each other —
+give neighbouring boxes different heights to let them fit on smaller charts.
+
 ### Fonts and colours
 
 Chart.js draws on a canvas, which CSS can't style. Instead, `chart-init.js`
@@ -93,6 +114,8 @@ leaves the Chart.js default in place.
 | `--chart-font-size` | every label, value and title (a number, in pixels) |
 | `--chart-color` | every label, value and title, plus the axis lines |
 | `--chart-title-weight` | axis titles and the chart title |
+| `--chart-value-weight` | axis values |
+| `--chart-axis-width` | axis lines (a number, in pixels) |
 
 ```scss
 .level_card {
@@ -104,13 +127,16 @@ leaves the Chart.js default in place.
 ```
 
 The properties are read again every time a chart updates, so a chart moved
-somewhere they differ (a popup, say) restyles itself on its next redraw.
+somewhere they differ (a popup, say) restyles itself on its next redraw. An
+unset property leaves whatever the chart last had, so set a base value in both
+places for anything the second place changes.
 
 Two more properties change what is drawn, in the same opt-in way:
 
 | Property | Effect |
 |---|---|
 | `--chart-axis-values: show` | axes set to *Line only* show their values too |
+| `--chart-callouts: show` | line chart callouts are drawn |
 | `--chart-area-background` | colour filled behind the plotting area |
 
 So a chart can stay minimal in a small card and gain its values and a shaded
