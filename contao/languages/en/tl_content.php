@@ -65,6 +65,15 @@ $GLOBALS['TL_LANG']['tl_content']['bd_a']                           = array('Alp
 $GLOBALS['TL_LANG']['tl_content']['bd_style']                       = array('Style', 'Line style for this series');
 $GLOBALS['TL_LANG']['tl_content']['bd_style_options']               = array('solid'=>'Solid', 'dashed'=>'Dashed', 'dotted'=>'Dotted');
 
+/* Line callouts */
+$GLOBALS['TL_LANG']['tl_content']['line_callouts_legend']           = 'Chart - Line Callouts';
+$GLOBALS['TL_LANG']['tl_content']['line_callouts']                  = array('Callouts', 'Boxed notes with a leader line to a point on the chart. Shown only where the site turns them on with --chart-callouts: show');
+$GLOBALS['TL_LANG']['tl_content']['co_text']                        = array('Text', 'The note shown in the box');
+$GLOBALS['TL_LANG']['tl_content']['co_x']                           = array('X', 'X-axis label the line points to, exactly as in the table header (e.g. 4000)');
+$GLOBALS['TL_LANG']['tl_content']['co_y']                           = array('Value', 'Value the line points to (e.g. 0.5)');
+$GLOBALS['TL_LANG']['tl_content']['co_to']                          = array('Bracket To', 'Optional. A second value: the line ends in a bracket spanning from Value to this');
+$GLOBALS['TL_LANG']['tl_content']['co_height']                      = array('Box Height', 'Value the box sits level with (e.g. 1.6)');
+
 /* Bar colors */
 $GLOBALS['TL_LANG']['tl_content']['bar_background_colors']          = array('Bar Background Colors', 'Enter the RGBA values for the individual bar background colors');
 $GLOBALS['TL_LANG']['tl_content']['b_bg_r']                         = array('Red', 'Red Value');
