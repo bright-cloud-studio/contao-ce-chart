@@ -78,6 +78,141 @@
         }
     };
 
+    // Break text into lines no wider than maxWidth in the context's current font
+    function wrapText(ctx, text, maxWidth) {
+        var lines = [];
+        var line = '';
+
+        text.split(/\s+/).forEach(function (word) {
+            var next = line ? line + ' ' + word : word;
+
+            if (line && ctx.measureText(next).width > maxWidth) {
+                lines.push(line);
+                next = word;
+            }
+
+            line = next;
+        });
+
+        lines.push(line);
+
+        return lines;
+    }
+
+    /**
+     * Draw boxed notes with a white leader line to a point on the chart
+     *
+     * Only drawn where the site sets --chart-callouts: show. Positions come
+     * from the data, so the callouts follow the chart at any size.
+     *
+     * Flow:
+     *  1. Pull the leader in from the plot edges, so it never sits on an axis
+     *  2. Put the box on the side facing the chart's centre, level with its height
+     *  3. Skip them all if any two boxes would overlap — the chart is too narrow
+     *  4. Run the leader from a dot by the box across and down to the point,
+     *     ending in a bracket when the callout spans two values
+     *  5. Draw the box and its wrapped text over the leader
+     */
+    var calloutsPlugin = {
+        id: 'bcsCallouts',
+        afterDraw: function (chart, args, options) {
+            if (!chart.$bcsShowCallouts) {
+                return;
+            }
+
+            var area = chart.chartArea;
+            var xScale = chart.scales.x;
+            var yScale = chart.scales.y;
+            var ticks = yScale.options.ticks;
+
+            // Box text is about 70% of the axis values, as in the design, and wraps at 15em
+            var font = Chart.helpers.toFont(Object.assign({}, ticks.font, {size: Math.round(ticks.font.size * 0.7), weight: 'bold'}));
+            var ctx = chart.ctx;
+
+            ctx.save();
+            ctx.font = font.string;
+
+            var callouts = options.items.map(function (item) {
+                var x = Math.min(Math.max(xScale.getPixelForValue(item.x), area.left + 16), area.right - 16);
+                var side = x < (area.left + area.right) / 2 ? 1 : -1;
+                var lines = wrapText(ctx, item.text, font.size * 15);
+                var width = Math.max.apply(null, lines.map(function (line) {
+                    return ctx.measureText(line).width;
+                })) + 18;
+                var height = lines.length * font.lineHeight + 12;
+                var level = yScale.getPixelForValue(item.height);
+
+                return {
+                    item: item,
+                    x: x,
+                    side: side,
+                    dot: x + side * 17,
+                    level: level,
+                    lines: lines,
+                    left: side > 0 ? x + 29 : x - 29 - width,
+                    top: level - height / 2,
+                    width: width,
+                    height: height
+                };
+            });
+
+            var overlap = callouts.some(function (a, i) {
+                return callouts.slice(i + 1).some(function (b) {
+                    return a.left < b.left + b.width + 8 && b.left < a.left + a.width + 8
+                        && a.top < b.top + b.height + 8 && b.top < a.top + a.height + 8;
+                });
+            });
+
+            if (overlap) {
+                ctx.restore();
+
+                return;
+            }
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#fff';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+
+            callouts.forEach(function (c) {
+                var y = yScale.getPixelForValue(c.item.y);
+
+                // Leader, then a bracket from Value to Bracket To, closed on the box's side
+                ctx.beginPath();
+                ctx.moveTo(c.dot, c.level);
+                ctx.lineTo(c.x, c.level);
+                ctx.lineTo(c.x, y);
+
+                if (null !== c.item.to) {
+                    var to = yScale.getPixelForValue(c.item.to);
+
+                    ctx.moveTo(c.x - c.side * 9, y);
+                    ctx.lineTo(c.x + c.side * 9, y);
+                    ctx.lineTo(c.x + c.side * 9, to);
+                    ctx.lineTo(c.x - c.side * 9, to);
+                }
+
+                ctx.stroke();
+
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(c.dot, c.level, 4, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Box in the axis colour, white text
+                ctx.fillStyle = ticks.color;
+                ctx.fillRect(c.left, c.top, c.width, c.height);
+                ctx.fillStyle = '#fff';
+
+                c.lines.forEach(function (line, i) {
+                    ctx.fillText(line, c.left + 9, c.top + 6 + font.lineHeight * (i + 0.5));
+                });
+            });
+
+            ctx.restore();
+        }
+    };
+
     /**
      * Keep a chart in step with the CSS around it
      *
@@ -91,6 +226,7 @@
      *
      *   --chart-axis-values: show   values on axes set to "Line only" appear
      *   --chart-area-background     colour filled behind the plotting area
+     *   --chart-callouts: show      line chart callouts are drawn
      */
     var stylesPlugin = {
         id: 'bcsStyles',
@@ -116,6 +252,7 @@
             });
 
             chart.$bcsAreaBackground = style.getPropertyValue('--chart-area-background').trim();
+            chart.$bcsShowCallouts = 'show' === style.getPropertyValue('--chart-callouts').trim();
         },
         afterLayout: function (chart) {
             chart.canvas.parentNode.style.setProperty('--chart-area-left', chart.chartArea.left + 'px');
@@ -257,6 +394,10 @@
 
                 if (plugins.bcsSplitLabels) {
                     config.plugins.push(splitLabelsPlugin);
+                }
+
+                if (plugins.bcsCallouts) {
+                    config.plugins.push(calloutsPlugin);
                 }
 
                 new Chart(canvas, config);
