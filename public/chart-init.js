@@ -322,6 +322,11 @@
      *   --chart-font-size      every label, tick and title, in pixels
      *   --chart-color          every label, tick and title, and the axis lines
      *   --chart-title-weight   axis titles and the chart title
+     *   --chart-value-weight   axis values
+     *   --chart-axis-width     axis lines, in pixels
+     *
+     * An unset property leaves whatever the chart last had, so where a chart
+     * moves between places (a card and a popup), set a base value on both.
      */
     function applyStyles(canvas, options) {
         var style = getComputedStyle(canvas);
@@ -329,6 +334,8 @@
         var size = parseFloat(style.getPropertyValue('--chart-font-size'));
         var color = style.getPropertyValue('--chart-color').trim();
         var weight = style.getPropertyValue('--chart-title-weight').trim();
+        var valueWeight = style.getPropertyValue('--chart-value-weight').trim();
+        var axisWidth = parseFloat(style.getPropertyValue('--chart-axis-width'));
 
         var font = {};
 
@@ -347,19 +354,31 @@
             titleFont.weight = weight;
         }
 
+        // Values share the text font and add their own weight
+        var valueFont = Object.assign({}, font);
+
+        if (valueWeight) {
+            valueFont.weight = valueWeight;
+        }
+
         font = Object.keys(font).length ? font : null;
         titleFont = Object.keys(titleFont).length ? titleFont : null;
+        valueFont = Object.keys(valueFont).length ? valueFont : null;
 
         // Axis lines, values and titles
         Object.keys(options.scales || {}).forEach(function (id) {
             var scale = options.scales[id];
 
             scale.ticks = scale.ticks || {};
-            applyText(scale.ticks, font, color);
+            applyText(scale.ticks, valueFont, color);
             applyText(scale.title, titleFont, color);
 
             if (color) {
                 scale.border = Object.assign({}, scale.border, {color: color});
+            }
+
+            if (axisWidth) {
+                scale.border = Object.assign({}, scale.border, {width: axisWidth});
             }
         });
 
