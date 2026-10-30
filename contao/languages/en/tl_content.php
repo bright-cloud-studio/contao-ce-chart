@@ -64,6 +64,7 @@ $GLOBALS['TL_LANG']['tl_content']['bd_b']                           = array('Blu
 $GLOBALS['TL_LANG']['tl_content']['bd_a']                           = array('Alpha', 'Alpha Value');
 $GLOBALS['TL_LANG']['tl_content']['bd_style']                       = array('Style', 'Line style for this series');
 $GLOBALS['TL_LANG']['tl_content']['bd_style_options']               = array('solid'=>'Solid', 'dashed'=>'Dashed', 'dotted'=>'Dotted');
+$GLOBALS['TL_LANG']['tl_content']['bd_width']                       = array('Width', 'Optional stroke width for this series. Leave blank to use the Line Stroke Width');
 
 /* Line callouts */
 $GLOBALS['TL_LANG']['tl_content']['line_callouts_legend']           = 'Chart - Line Callouts';
