@@ -1,496 +1,301 @@
 <?php
 
 /**
- * @copyright  Bright Cloud Studio
+ * @copyright  Bright Cliud Studio
  * @author     Bright Cloud Studio
  * @package    Contao CE Chart
- * @license    MIT
- * @see        https://github.com/bright-cloud-studio/contao-ce-chart
+ * @license    LGPL-3.0+
+ * @see	       https://github.com/bright-cloud-studio/contao-ce-chart
  */
 
-/** Table tl_content */
+// Get our default 'tl_content' DCA
 $dc = &$GLOBALS['TL_DCA']['tl_content'];
+$GLOBALS['TL_DCA']['tl_content']['palettes']['chart_line'] = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_line_config_legend},animate,line_tension,line_border_width,line_border_dash,line_border_joint_style,line_fill;{line_border_colors_legend},line_border_colors;{line_background_colors_legend},line_background_colors;{line_point_legend},line_point_background_color,line_point_border_color,line_point_border_width,line_point_style,line_point_radius;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['chart_bar'] = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_bar_config_legend},bar_border_width,bar_border_skipped,bar_border_radius,bar_inflate_amount,bar_point_style;{bar_background_colors_legend},bar_background_colors;{bar_border_colors_legend},bar_border_colors;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 
-// Palettes
-$dc['palettes']['chart_line'] = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_line_config_legend},animate,line_tension,line_border_width,line_border_dash,line_border_joint_style,line_fill;{line_border_colors_legend},line_border_colors;{line_background_colors_legend},line_background_colors;{line_point_legend},line_point_background_color,line_point_border_color,line_point_border_width,line_point_style,line_point_radius;{line_callouts_legend},line_callouts;{chart_display_legend},chart_hide,axis_x,axis_y,value_min,value_max,value_step;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},cssID;{invisible_legend:hide},invisible,start,stop';
-$dc['palettes']['chart_bar']  = '{type_legend},type,headline;{dataset_legend},tableitems,label_x,label_y,chart_desc;{chart_bar_config_legend},bar_horizontal,bar_gradient,bar_split_labels,bar_border_width,bar_border_skipped,bar_border_radius,bar_inflate_amount,bar_point_style;{bar_background_colors_legend},bar_background_colors;{bar_border_colors_legend},bar_border_colors;{chart_display_legend},chart_hide,axis_x,axis_y,value_min,value_max,value_step;{chart_options_legend},maintain_aspect_ratio,responsive,max_width,max_height;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},cssID;{invisible_legend:hide},invisible,start,stop';
-
-// Fields
-$dc['fields'] = array_merge($dc['fields'], array
-(
-    'label_x' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['label_x'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "mediumtext NULL"
+$arrFields = array(
+    'label_x'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['label_x'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "mediumtext NULL"
     ),
-    'label_y' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['label_y'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "mediumtext NULL"
+    'label_y'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['label_y'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "mediumtext NULL"
     ),
-    'chart_desc' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['chart_desc'],
-        'exclude'                 => true,
-        'inputType'               => 'textarea',
-        'eval'                    => array('tl_class'=>'clr', 'rte'=>'tinyMCE'),
-        'sql'                     => "mediumtext NULL"
+    'chart_desc'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['chart_desc'],
+        'inputType'                => 'textarea',
+		'eval'                     => array('tl_class'=>'clr', 'rte'=>'tinyMCE'),
+		'sql'                      => "mediumtext NULL"
     ),
-    'animate' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['animate'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('yes'=>'Yes', 'no'=>'No'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'yes'"
+    'animate'                  => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['animate'],
+        'inputType'                => 'select',
+		'options'                  => array('yes' => 'Yes', 'no' => 'No'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'yes'"
     ),
-
-    // Line configuration
-    'line_tension' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_tension'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '0'"
+    'line_tension'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_tension'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
-    'line_border_width' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_border_width'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '3'"
+    'line_border_width'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_width'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '3'"
     ),
-    'line_border_dash' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_border_dash'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(255) NOT NULL default '[0, 0]'"
+    'line_border_dash'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_dash'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(255) NOT NULL default '[0, 0]'"
     ),
-    'line_border_joint_style' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_border_joint_style'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('round'=>'Round', 'bevel'=>'Bevel', 'miter'=>'Miter'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'round'"
+    'line_border_joint_style'  => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_border_joint_style'],
+        'inputType'                => 'select',
+		'options'                  => array('round' => 'Round', 'bevel' => 'Bevel', 'miter' => 'Miter'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'round'"
     ),
-    'line_fill' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_fill'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('false'=>'False', 'true'=>'True'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'false'"
+    'line_fill'                => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_fill'],
+        'inputType'                => 'select',
+		'options'                  => array('false' => 'False', 'true' => 'True'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'false'"
     ),
 
-    // Bar configuration
-    'bar_horizontal' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_horizontal'],
-        'exclude'                 => true,
-        'inputType'               => 'checkbox',
-        'eval'                    => array('tl_class'=>'w50 m12'),
-        'sql'                     => array('type' => 'boolean', 'default' => false)
+
+    'bar_border_width'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_width'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
-    'bar_gradient' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_gradient'],
-        'exclude'                 => true,
-        'inputType'               => 'checkbox',
-        'eval'                    => array('tl_class'=>'w50 m12'),
-        'sql'                     => array('type' => 'boolean', 'default' => false)
+    'bar_border_skipped'                => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_skipped'],
+        'inputType'                => 'select',
+		'options'                  => array('start' => 'Start', 'end' => 'End', 'middle' => 'Middle', 'bottom' => 'Bottom', 'left' => 'Left', 'top' => 'Top', 'right' => 'Right', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'start'"
     ),
-    'bar_split_labels' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_split_labels'],
-        'exclude'                 => true,
-        'inputType'               => 'checkbox',
-        'eval'                    => array('tl_class'=>'w50 m12'),
-        'sql'                     => array('type' => 'boolean', 'default' => false)
+    'bar_border_radius'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_border_radius'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
-    'bar_border_width' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_border_width'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '0'"
+    'bar_inflate_amount'        => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_inflate_amount'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default 'auto'"
     ),
-    'bar_border_skipped' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_border_skipped'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('start'=>'Start', 'end'=>'End', 'middle'=>'Middle', 'bottom'=>'Bottom', 'left'=>'Left', 'top'=>'Top', 'right'=>'Right', 'false'=>'False'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'start'"
-    ),
-    'bar_border_radius' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_border_radius'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '0'"
-    ),
-    'bar_inflate_amount' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_inflate_amount'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default 'auto'"
-    ),
-    'bar_point_style' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_point_style'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('circle'=>'Circle', 'cross'=>'Cross', 'crossRot'=>'Cross Rot', 'dash'=>'Dash', 'line'=>'Line', 'rect'=>'Rect', 'rectRounded'=>'Rect Rounded', 'rectRot'=>'Rect Rot', 'star'=>'Star', 'triangle'=>'Triangle', 'false'=>'False'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'circle'"
+    'bar_point_style'           => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['bar_point_style'],
+        'inputType'                => 'select',
+		'options'                  => array('circle' => 'Circle', 'cross' => 'Cross', 'crossRot' => 'Cross Rot', 'dash' => 'Dash', 'line' => 'Line', 'rect' => 'Rect', 'rectRounded' => 'Rect Rounded', 'rectRot' => 'Rect Rot', 'star' => 'Star', 'triangle' => 'Triangle', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'circle'"
     ),
 
-    // Line points
-    'line_point_radius' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_point_radius'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '0'"
+
+    'line_point_radius'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_radius'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '0'"
     ),
-    'line_point_style' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_point_style'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('circle'=>'Circle', 'cross'=>'Cross', 'crossRot'=>'Cross Rot', 'dash'=>'Dash', 'line'=>'Line', 'rect'=>'Rect', 'rectRounded'=>'Rect Rounded', 'rectRot'=>'Rect Rot', 'star'=>'Star', 'triangle'=>'Triangle', 'false'=>'False'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'circle'"
+    'line_point_style'           => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_style'],
+        'inputType'                => 'select',
+		'options'                  => array('circle' => 'Circle', 'cross' => 'Cross', 'crossRot' => 'Cross Rot', 'dash' => 'Dash', 'line' => 'Line', 'rect' => 'Rect', 'rectRounded' => 'Rect Rounded', 'rectRot' => 'Rect Rot', 'star' => 'Star', 'triangle' => 'Triangle', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'circle'"
     ),
-    'line_point_background_color' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_point_background_color'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '#000000'"
+    'line_point_background_color'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_background_color'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#000000'"
     ),
-    'line_point_border_width' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_point_border_width'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '2'"
+    'line_point_border_width'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_border_width'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '2'"
     ),
-    'line_point_border_color' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_point_border_color'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(12) NOT NULL default '#000000'"
+    'line_point_border_color'         => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['line_point_border_color'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "varchar(12) NOT NULL default '#000000'"
     ),
 
-    // Line colours
-    'line_background_colors' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_background_colors'],
-        'exclude'                 => true,
-        'inputType'               => 'multiColumnWizard',
-        'eval'                    => array('tl_class'=>'clr', 'columnFields'=>array
-        (
-            'bg_r' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bg_r'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bg_g' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bg_g'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bg_b' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bg_a' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bg_a'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            )
-        )),
-        'sql'                     => "blob NULL"
+
+
+    'line_background_colors'       => array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_content']['line_background_colors'],
+        'exclude'   => true,
+        'inputType' => 'multiColumnWizard',
+        'eval'      => [
+            'columnFields' => [
+                'bg_r' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_r'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bg_g' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bg_b' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bg_a' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_a'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+            ],
+        ],
+        'sql'       => 'blob NULL',
     ),
-    'line_border_colors' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_border_colors'],
-        'exclude'                 => true,
-        'inputType'               => 'multiColumnWizard',
-        'eval'                    => array('tl_class'=>'clr', 'columnFields'=>array
-        (
-            'bd_r' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bd_r'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bd_g' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bd_g'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bd_b' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bd_b'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bd_a' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bd_a'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'bd_style' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['bd_style'],
-                'exclude'         => true,
-                'inputType'       => 'select',
-                'options'         => array('solid', 'dashed', 'dotted'),
-                'reference'       => &$GLOBALS['TL_LANG']['tl_content']['bd_style_options']
-            )
-        )),
-        'sql'                     => "blob NULL"
+    'line_border_colors'       => array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_content']['line_border_colors'],
+        'exclude'   => true,
+        'inputType' => 'multiColumnWizard',
+        'eval'      => [
+            'columnFields' => [
+                'bd_r' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_r'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bd_g' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bd_b' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'bd_a' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['bg_a'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+            ],
+        ],
+        'sql'       => 'blob NULL',
     ),
 
-    // Line callouts
-    'line_callouts' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['line_callouts'],
-        'exclude'                 => true,
-        'inputType'               => 'multiColumnWizard',
-        'eval'                    => array('tl_class'=>'clr', 'columnFields'=>array
-        (
-            'co_text' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['co_text'],
-                'exclude'         => true,
-                'inputType'       => 'text',
-                'eval'            => array('style'=>'width:260px')
-            ),
-            'co_x' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['co_x'],
-                'exclude'         => true,
-                'inputType'       => 'text',
-                'eval'            => array('style'=>'width:70px')
-            ),
-            'co_y' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['co_y'],
-                'exclude'         => true,
-                'inputType'       => 'text',
-                'eval'            => array('style'=>'width:70px')
-            ),
-            'co_to' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['co_to'],
-                'exclude'         => true,
-                'inputType'       => 'text',
-                'eval'            => array('style'=>'width:70px')
-            ),
-            'co_height' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['co_height'],
-                'exclude'         => true,
-                'inputType'       => 'text',
-                'eval'            => array('style'=>'width:70px')
-            )
-        )),
-        'sql'                     => "blob NULL"
+
+    
+    'bar_background_colors'       => array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_content']['bar_background_colors'],
+        'exclude'   => true,
+        'inputType' => 'multiColumnWizard',
+        'eval'      => [
+            'columnFields' => [
+                'b_bg_r' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bg_r'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'b_bg_g' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bg_g'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'b_bg_b' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bg_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'b_bg_a' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bg_a'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+            ],
+        ],
+        'sql'       => 'blob NULL',
+    ),
+    'bar_border_colors'       => array(
+        'label'     => &$GLOBALS['TL_LANG']['tl_content']['bar_border_colors'],
+        'exclude'   => true,
+        'inputType' => 'multiColumnWizard',
+        'eval'      => [
+            'columnFields' => [
+                'b_bd_r' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bd_r'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'b_bd_g' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bd_g'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'b_bd_b' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bd_b'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+                'b_bd_a' => [
+                    'label'     => &$GLOBALS['TL_LANG']['tl_content']['b_bd_a'],
+                    'exclude'   => true,
+                    'inputType' => 'text',
+                ],
+            ],
+        ],
+        'sql'       => 'blob NULL',
     ),
 
-    // Bar colours
-    'bar_background_colors' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_background_colors'],
-        'exclude'                 => true,
-        'inputType'               => 'multiColumnWizard',
-        'eval'                    => array('tl_class'=>'clr', 'columnFields'=>array
-        (
-            'b_bg_r' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bg_r'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'b_bg_g' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bg_g'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'b_bg_b' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bg_b'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'b_bg_a' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bg_a'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            )
-        )),
-        'sql'                     => "blob NULL"
+    
+    'responsive'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['responsive'],
+        'inputType'                => 'select',
+		'options'                  => array('true' => 'True', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'true'"
     ),
-    'bar_border_colors' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bar_border_colors'],
-        'exclude'                 => true,
-        'inputType'               => 'multiColumnWizard',
-        'eval'                    => array('tl_class'=>'clr', 'columnFields'=>array
-        (
-            'b_bd_r' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bd_r'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'b_bd_g' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bd_g'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'b_bd_b' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bd_b'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            ),
-            'b_bd_a' => array
-            (
-                'label'           => &$GLOBALS['TL_LANG']['tl_content']['b_bd_a'],
-                'exclude'         => true,
-                'inputType'       => 'text'
-            )
-        )),
-        'sql'                     => "blob NULL"
+    'maintain_aspect_ratio'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['maintain_aspect_ratio'],
+        'inputType'                => 'select',
+		'options'                  => array('true' => 'True', 'false' => 'False'),
+		'eval'                     => array('mandatory'=>true, 'tl_class'=>'w50'),
+		'sql'                      => "varchar(32) NOT NULL default 'true'"
+    ),
+    'max_width'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['max_width'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "mediumtext NULL"
+    ),
+    'max_height'             => array(
+        'label'                    => &$GLOBALS['TL_LANG']['tl_content']['max_height'],
+        'inputType'                => 'text',
+		'eval'                     => array('tl_class'=>'w50'),
+		'sql'                      => "mediumtext NULL"
     ),
 
-    // Chart display
-    'chart_hide' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['chart_hide'],
-        'exclude'                 => true,
-        'inputType'               => 'checkbox',
-        'options'                 => array('legend', 'title', 'grid'),
-        'reference'               => &$GLOBALS['TL_LANG']['tl_content']['chart_hide_options'],
-        'eval'                    => array('multiple'=>true, 'tl_class'=>'clr'),
-        'sql'                     => "blob NULL"
-    ),
-    'axis_x' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['axis_x'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('full', 'line', 'hidden'),
-        'reference'               => &$GLOBALS['TL_LANG']['tl_content']['axis_options'],
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(16) NOT NULL default 'full'"
-    ),
-    'axis_y' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['axis_y'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('full', 'line', 'hidden'),
-        'reference'               => &$GLOBALS['TL_LANG']['tl_content']['axis_options'],
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "varchar(16) NOT NULL default 'full'"
-    ),
-    'value_min' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['value_min'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('rgxp'=>'digit', 'maxlength'=>16, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(16) NOT NULL default ''"
-    ),
-    'value_max' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['value_max'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('rgxp'=>'digit', 'maxlength'=>16, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(16) NOT NULL default ''"
-    ),
-    'value_step' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['value_step'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('rgxp'=>'digit', 'maxlength'=>16, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(16) NOT NULL default ''"
-    ),
 
-    // Chart options
-    'responsive' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['responsive'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('true'=>'True', 'false'=>'False'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'true'"
-    ),
-    'maintain_aspect_ratio' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['maintain_aspect_ratio'],
-        'exclude'                 => true,
-        'inputType'               => 'select',
-        'options'                 => array('true'=>'True', 'false'=>'False'),
-        'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-        'sql'                     => "varchar(32) NOT NULL default 'true'"
-    ),
-    'max_width' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['max_width'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "mediumtext NULL"
-    ),
-    'max_height' => array
-    (
-        'label'                   => &$GLOBALS['TL_LANG']['tl_content']['max_height'],
-        'exclude'                 => true,
-        'inputType'               => 'text',
-        'eval'                    => array('tl_class'=>'w50'),
-        'sql'                     => "mediumtext NULL"
-    )
-));
+
+    
+);
+
+$dc['fields'] = array_merge($dc['fields'], $arrFields);
