@@ -78,11 +78,48 @@ class LineChartController extends AbstractChartController
             ],
         ];
 
+        $callouts = $this->getCallouts($model, $this->getLabels($rows));
+
+        if ($callouts) {
+            $options['plugins']['bcsCallouts'] = ['items' => $callouts];
+        }
+
         return [
             'type' => 'line',
             'data' => ['labels' => $this->getLabels($rows), 'datasets' => $datasets],
             'options' => $options,
         ];
+    }
+
+    /**
+     * Read the callouts wizard into what the bcsCallouts plugin draws
+     *
+     * Each row's X is an x-axis label, which the plugin needs as its position
+     * in the label list. Rows without text, or whose X isn't one of the
+     * labels, are left out rather than drawn in the wrong place.
+     */
+    private function getCallouts(ContentModel $model, array $labels): array
+    {
+        $labels = array_map('trim', array_map('strval', $labels));
+        $callouts = [];
+
+        foreach (StringUtil::deserialize($model->line_callouts, true) as $row) {
+            $index = array_search(trim((string) ($row['co_x'] ?? '')), $labels, true);
+
+            if ('' === trim((string) ($row['co_text'] ?? '')) || false === $index) {
+                continue;
+            }
+
+            $callouts[] = [
+                'text' => StringUtil::decodeEntities($row['co_text']),
+                'x' => $index,
+                'y' => (float) $row['co_y'],
+                'to' => '' === (string) ($row['co_to'] ?? '') ? null : (float) $row['co_to'],
+                'height' => (float) $row['co_height'],
+            ];
+        }
+
+        return $callouts;
     }
 
     /**
