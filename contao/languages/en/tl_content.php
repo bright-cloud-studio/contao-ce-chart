@@ -91,6 +91,8 @@ $GLOBALS['TL_LANG']['tl_content']['b_bd_a']                         = array('Alp
 /* Chart display */
 $GLOBALS['TL_LANG']['tl_content']['chart_hide']                     = array('Hide Chart Parts', 'Choose which parts of the chart should not be drawn');
 $GLOBALS['TL_LANG']['tl_content']['chart_hide_options']             = array('legend'=>'Legend', 'title'=>'Title', 'grid'=>'Grid lines');
+$GLOBALS['TL_LANG']['tl_content']['line_legend_style']              = array('Legend Sample Style', 'Choose what the legend draws beside each series name');
+$GLOBALS['TL_LANG']['tl_content']['line_legend_style_options']      = array('box'=>'Filled box', 'line'=>'Line sample (matches each series)');
 $GLOBALS['TL_LANG']['tl_content']['axis_x']                         = array('X-Axis Display', 'Choose how much of the horizontal axis to draw');
 $GLOBALS['TL_LANG']['tl_content']['axis_y']                         = array('Y-Axis Display', 'Choose how much of the vertical axis to draw');
 $GLOBALS['TL_LANG']['tl_content']['axis_options']                   = array('full'=>'Full (line and values)', 'line'=>'Line only (no values)', 'hidden'=>'Hidden');
