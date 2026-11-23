@@ -214,26 +214,31 @@
     };
 
     /**
-     * Build one legend entry per dataset from its own line
+     * Build one legend entry per dataset from the configuration
      *
-     * The resolved element options are read rather than the dataset's, so the
-     * colour Chart.js picked out of the elements.line.borderColor list arrives
-     * already matched to its series. The visibility and index are carried over
-     * so that clicking an entry still toggles its line.
+     * The labels are laid out before the datasets are, so the line elements
+     * carry no options yet and have to be left alone. The same values are read
+     * out of the configuration instead: a series sets its own width, dash and
+     * cap, and falls back to the shared ones under elements.line. Only the
+     * colours are held there as a list, one per series, which Chart.js wraps
+     * when there are fewer colours than lines — so this wraps them too.
+     *
+     * The visibility and index are carried over so that clicking an entry
+     * still toggles its line.
      */
     function lineLegendLabels(chart) {
         var labels = chart.config.options.plugins.legend.labels;
+        var line = chart.config.options.elements.line;
+        var colors = [].concat(line.borderColor);
 
         return chart.data.datasets.map(function (dataset, index) {
-            var line = chart.getDatasetMeta(index).dataset.options;
-
             return {
                 text: dataset.label,
                 fontColor: labels.color,
-                strokeStyle: line.borderColor,
-                lineWidth: line.borderWidth,
-                lineDash: line.borderDash,
-                lineCap: line.borderCapStyle,
+                strokeStyle: colors[index % colors.length],
+                lineWidth: undefined === dataset.borderWidth ? line.borderWidth : dataset.borderWidth,
+                lineDash: dataset.borderDash || line.borderDash,
+                lineCap: dataset.borderCapStyle || 'butt',
                 lineJoin: line.borderJoinStyle,
                 pointStyle: 'line',
                 hidden: !chart.isDatasetVisible(index),
