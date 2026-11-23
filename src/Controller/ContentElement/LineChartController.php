@@ -24,6 +24,7 @@ class LineChartController extends AbstractChartController
      *  1. Read the per-series colours from the two colour wizards
      *  2. Give each dataset the colour and line style sitting at its own position
      *  3. Apply the shared line and point styling through the elements option
+     *  4. Switch the legend over to line samples where the editor asked for them
      */
     protected function getConfig(ContentModel $model, array $rows): array
     {
@@ -91,6 +92,12 @@ class LineChartController extends AbstractChartController
 
         if ($callouts) {
             $options['plugins']['bcsCallouts'] = ['items' => $callouts];
+        }
+
+        // Line samples in the legend are opt-in, so charts saved before the
+        // field existed keep the filled boxes they were drawn with
+        if ('line' === $model->line_legend_style) {
+            $options['plugins']['bcsLineLegend'] = true;
         }
 
         return [
