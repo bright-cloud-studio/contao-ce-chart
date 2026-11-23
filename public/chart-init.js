@@ -214,6 +214,58 @@
     };
 
     /**
+     * Build one legend entry per dataset from its own line
+     *
+     * The resolved element options are read rather than the dataset's, so the
+     * colour Chart.js picked out of the elements.line.borderColor list arrives
+     * already matched to its series. The visibility and index are carried over
+     * so that clicking an entry still toggles its line.
+     */
+    function lineLegendLabels(chart) {
+        var labels = chart.config.options.plugins.legend.labels;
+
+        return chart.data.datasets.map(function (dataset, index) {
+            var line = chart.getDatasetMeta(index).dataset.options;
+
+            return {
+                text: dataset.label,
+                fontColor: labels.color,
+                strokeStyle: line.borderColor,
+                lineWidth: line.borderWidth,
+                lineDash: line.borderDash,
+                lineCap: line.borderCapStyle,
+                lineJoin: line.borderJoinStyle,
+                pointStyle: 'line',
+                hidden: !chart.isDatasetVisible(index),
+                datasetIndex: index
+            };
+        });
+    }
+
+    /**
+     * Show a line in the legend instead of a filled box
+     *
+     * Chart.js builds its own labels from the point at index 0 whenever
+     * usePointStyle is set, which loses the dash pattern telling a dotted
+     * series from a solid one, so the labels are built here instead. The
+     * sample's length follows boxHeight rather than boxWidth, which only
+     * reserves the space it sits in.
+     */
+    var lineLegendPlugin = {
+        id: 'bcsLineLegend',
+        beforeUpdate: function (chart) {
+            var legend = chart.config.options.plugins.legend;
+            var labels = legend.labels = legend.labels || {};
+
+            labels.usePointStyle = true;
+            labels.pointStyle = 'line';
+            labels.boxWidth = 28;
+            labels.boxHeight = 20;
+            labels.generateLabels = lineLegendLabels;
+        }
+    };
+
+    /**
      * Keep a chart in step with the CSS around it
      *
      * The custom properties are read again before every update, so a chart
@@ -417,6 +469,10 @@
 
                 if (plugins.bcsCallouts) {
                     config.plugins.push(calloutsPlugin);
+                }
+
+                if (plugins.bcsLineLegend) {
+                    config.plugins.push(lineLegendPlugin);
                 }
 
                 new Chart(canvas, config);
